@@ -1,0 +1,19 @@
+Package: local.gofahud
+Name: GOFA HUD
+Version: 0.2.0
+Architecture: iphoneos-arm64
+Description: GOFA warning bubbles for iPhone and the CarPlay system interface.
+ Rootless Dopamine build tested with GOFA 4.2.1 on iOS 15.8.8.
+Maintainer: GOFA HUD Development
+Author: GOFA HUD contributors; GMapHUD base by chou
+Section: Tweaks
+Depends: firmware (>= 15.0), mobilesubstrate, ldid
+Tag: role::enduser
+Filename: local.gofahud_0.2.0_iphoneos-arm64.deb
+Size: 146880
+MD5sum: d116c6c0b6491aaec43a2fc389be22bd
+SHA1: 74e59e7bb500d403360285db20851e36f43b406f
+SHA256: 1ff297895684665a60714d7bcfd4ea28a8a28045dd8e361d6349ffabddf67862
+SHA512: 4548acb90be211e2b5897dd5edea24538540cccc3e148e4cca0cb4be740732f98997b4f3825a7377e3bf41cb6fcb3e270a59b2b376a426a92ccf55fc516699fe
+Depiction: https://manhtien9x.github.io/gofahud-repo/depiction.html
+

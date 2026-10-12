@@ -2,8 +2,12 @@ Package: local.gofahud
 Name: GOFA HUD
 Version: 0.2.0
 Architecture: iphoneos-arm64
-Description: GOFA warning bubbles for iPhone and the CarPlay system interface.
- Rootless Dopamine build tested with GOFA 4.2.1 on iOS 15.8.8.
+Description: Bong bóng tốc độ và cảnh báo GOFA trên iPhone và CarPlay.
+ Bản thử nghiệm 0.2.0 dành cho Dopamine rootless.
+ Đã thử trên iPhone 6s, iOS 15.8.8, GOFA 4.2.1.
+ iOS 16-18 và các phiên bản GOFA khác chưa được kiểm chứng.
+ Kéo đổi vị trí, chạm mở GOFA, kéo vào X để tắt bong bóng.
+ Xem giới thiệu tiếng Việt để biết yêu cầu và hướng dẫn cài đặt.
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks

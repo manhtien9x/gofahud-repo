@@ -1,0 +1,21 @@
+name: Build GOFA HUD with Apple clang
+on:
+  push:
+    paths:
+      - 'ci/gofahud/**'
+      - '.github/workflows/gofahud-apple.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 ci/gofahud/build_apple.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gofahud-apple-arm64e
+          path: ci/gofahud/build/*
+          retention-days: 7

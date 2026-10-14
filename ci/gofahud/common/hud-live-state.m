@@ -27,3 +27,15 @@ NSDictionary *GOFAHUDCameraDecode(uint64_t state,double uptime) {
     if(kind>4 || age<0 || age>=5) return nil;
     return @{@"kind":@(kind),@"meters":@(state&65535)};
 }
+
+const char *const GOFAHUDResidentialName="local.gofahud.hud.residential.v1";
+const char *const GOFAHUDNoPassingName="local.gofahud.hud.no-passing.v1";
+uint64_t GOFAHUDRoadEncode(uint32_t sign,uint32_t meters,double received) {
+ if(sign<12 || sign>15 || meters>65535 || !isfinite(received) || received<0 || received>=(double)(UINT64_MAX>>24)/1000) return 0;
+ return ((uint64_t)floor(received*1000)<<24) | ((uint64_t)sign<<16) | meters;
+}
+NSDictionary *GOFAHUDRoadDecode(uint64_t state,double uptime) {
+ unsigned sign=(state>>16)&255; double age=uptime-(double)(state>>24)/1000;
+ if(sign<12 || sign>15 || !isfinite(uptime) || age<0 || age>=5) return nil;
+ return @{@"sign":@(sign),@"meters":@(state&65535)};
+}

@@ -6,9 +6,13 @@ Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
-Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
- Tương thích: Rootless (Dopamine), iOS 15 và 16.
- Cần GOFA 4.2.1; có log cài đặt và chẩn đoán.
+Description: Bong bóng GOFA trên iPhone và CarPlay.
+ Tương thích: iOS 15–16, Dopamine Rootless.
+ Bố cục ngang/dọc, kích cỡ, vị trí và thứ tự các phần.
+ Tự co giãn khi có camera, khu dân cư hoặc cấm vượt.
+ Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
+ Xuất TXT đầy đủ các log đọc được và CrashReporter.
+ Cần GOFA 4.2.1.
 Tag: role::enduser
 Filename: GOFAHUD-0.3.1-rootless.deb
 Size: 648224
@@ -26,9 +30,13 @@ Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
-Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
- Tương thích: Rootless (Dopamine), iOS 15 và 16.
- Cần GOFA 4.2.1; có log cài đặt và chẩn đoán.
+Description: Bong bóng GOFA trên iPhone và CarPlay.
+ Tương thích: RootHide; cần rootless-compat từ 0.9.
+ Bố cục ngang/dọc, kích cỡ, vị trí và thứ tự các phần.
+ Tự co giãn khi có camera, khu dân cư hoặc cấm vượt.
+ Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
+ Xuất TXT đầy đủ các log đọc được và CrashReporter.
+ Cần GOFA 4.2.1.
 Tag: role::enduser
 Pre-Depends: rootless-compat(>= 0.9)
 Filename: GOFAHUD-0.3.1-roothide.deb
@@ -47,9 +55,13 @@ Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 14.0), firmware (<< 15.0), org.coolstar.libhooker, preferenceloader
-Description: Bong bóng tốc độ và biển báo GOFA cho iPhone và CarPlay.
- Bản thử nghiệm iOS 14, Taurine Rootful, arm64. Yêu cầu GOFA 4.2.1.
- Chưa kiểm chứng hoạt động thực tế trên iOS 14; kèm nhật ký chẩn đoán.
+Description: Bong bóng GOFA trên iPhone và CarPlay.
+ Tương thích: Dành cho iOS 14 Rootful.
+ Bố cục ngang/dọc, kích cỡ, vị trí và thứ tự các phần.
+ Tự co giãn khi có camera, khu dân cư hoặc cấm vượt.
+ Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
+ Xuất TXT đầy đủ các log đọc được và CrashReporter.
+ Cần GOFA 4.2.1.
 Tag: role::enduser
 Filename: GOFAHUD-0.3.1-rootful.deb
 Size: 459978
@@ -58,4 +70,5 @@ MD5sum: 0f7b59fcbe2ab65a52df3cd82653104e
 SHA1: cdf5bf0ab35b58fccf17297842da1e05c21ca97f
 SHA256: 7a7247e5a332b59277d1beb373ff205234129514650cc080f44fb8ab1daa6a4b
 SHA512: 4e8033c2dbc605ed77d66db640de2d9ab0355a3f5dee0d26ce8deaa06d1093bb6bb6b1c5180dc7af3ed41240547924456bca2d202a4e6831347de853a5939cc3
+
 

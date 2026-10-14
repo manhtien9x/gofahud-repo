@@ -1,6 +1,6 @@
 Package: local.gofahud
 Name: GOFA HUD
-Version: 0.2.1~beta7
+Version: 0.2.1
 Architecture: iphoneos-arm64
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -8,24 +8,24 @@ Section: Tweaks
 Depends: firmware (>= 15.0), mobilesubstrate, ldid
 Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
  Tương thích: Rootless (Dopamine).
- Phiên bản 0.2.1 beta7; gói chung cho Dopamine Rootless trên iOS 15 và 16.
+ Phiên bản 0.2.1; gói chung cho Dopamine Rootless trên iOS 15 và 16.
  Cần cài riêng ứng dụng GOFA 4.2.1.
 Tag: role::enduser
-Filename: local.gofahud_0.2.1~beta7_iphoneos-arm64.deb
-Size: 247348
-MD5sum: 64343fb201c67058b66faddc42ce24d1
-SHA1: cad6b4d4b6f7a319cf44e3dfaa1a34988cedb561
-SHA256: 17dccae1bc46bc60a3b38b846c7a26e593eaefe8db21f7621d21e5f6fcef1e44
-SHA512: 033aea0ce1c20435fce31c6736cff5ebf9e854e3cd65e766b639a8a40e46306adcbb773a8cb74670d663cec45696cd22a20c2ca9e6cdc52ae3960dab3fdf47bf
+Filename: local.gofahud_0.2.1_iphoneos-arm64.deb
+Size: 247382
+MD5sum: 4ebf49cce51ed3b6c0b2cd58eee11edb
+SHA1: 72a7301cf47043a8d272976b8e4756d335437540
+SHA256: 4347c34685f4a8f86995fdd5cc6a90910778ef45ef3afecb0dd87ef9afc520ad
+SHA512: 82bfe055c859caf7fbdb89797d9b3fc3295e77af8e48bb155d38373bc3dd56c862e91a6057f4868095b62852b6c30a54a201be85aaa6cdf766a7136301a208d9
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-rootless.html
 
 Package: local.gofahud
 Name: GOFA HUD
-Version: 0.2.1~beta6~rh1
+Version: 0.2.1
 Architecture: iphoneos-arm64e
 Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
  Tương thích: RootHide.
- Phiên bản 0.2.1 beta6 rh1; cần rootless-compat >= 0.9.
+ Phiên bản 0.2.1; cần rootless-compat >= 0.9.
  Cần cài riêng ứng dụng GOFA 4.2.1.
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -33,11 +33,11 @@ Section: Tweaks
 Depends: firmware (>= 15.0), mobilesubstrate, ldid
 Tag: role::enduser
 Pre-Depends: rootless-compat(>= 0.9)
-Filename: local.gofahud_0.2.1~beta6~rh1_iphoneos-arm64e.deb
-Size: 471402
-MD5sum: 0be65925e76f16eb8d27a247dcc70d6f
-SHA1: 5233291975054653dcb8498e500ca6c5737e9ac4
-SHA256: 93ea7e2f90c024abe174651a3a700e3067ab542efbdc92aaa1b7584cfcecaa65
-SHA512: 84fdbae578f9582e1f56658ecfff1ccdecc2540337b5201b9a292b9f086a62c592f4ff31a26044a164ba793462da77e093c5bb2a3598e1de2a668c76b0beb36b
+Filename: local.gofahud_0.2.1_iphoneos-arm64e.deb
+Size: 471232
+MD5sum: e850ed2e43a9f2ef5d94f5fc479fe12b
+SHA1: ae7a835d7cc10c41878d1d096995cc7856b8209c
+SHA256: f54173126ef8b099a91f14da8f7a234449a9865e26e3e0528d57b3aded1d8a7d
+SHA512: 0e74d2e4b396833602daea47b5d1dd213a9a94ed364f1569898be5202d05120a5303f3bb725a5f65b509d889aa6887fb76ccb3aa144cfddb9617d8770622b802
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-roothide.html
 

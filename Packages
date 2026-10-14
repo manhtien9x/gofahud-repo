@@ -2,12 +2,10 @@ Package: local.gofahud
 Name: GOFA HUD
 Version: 0.2.0
 Architecture: iphoneos-arm64
-Description: Bong bóng tốc độ và cảnh báo GOFA trên iPhone và CarPlay.
- Bản thử nghiệm 0.2.0 dành cho Dopamine rootless.
- Đã thử trên iPhone 6s, iOS 15.8.8, GOFA 4.2.1.
- iOS 16-18 và các phiên bản GOFA khác chưa được kiểm chứng.
- Kéo đổi vị trí, chạm mở GOFA, kéo vào X để tắt bong bóng.
- Xem giới thiệu tiếng Việt để biết yêu cầu và hướng dẫn cài đặt.
+Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+ Tương thích: Rootless (Dopamine).
+ Phiên bản 0.2.0; dành cho Dopamine rootless.
+ Cần cài riêng ứng dụng GOFA 4.2.1.
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
@@ -19,5 +17,27 @@ MD5sum: d116c6c0b6491aaec43a2fc389be22bd
 SHA1: 74e59e7bb500d403360285db20851e36f43b406f
 SHA256: 1ff297895684665a60714d7bcfd4ea28a8a28045dd8e361d6349ffabddf67862
 SHA512: 4548acb90be211e2b5897dd5edea24538540cccc3e148e4cca0cb4be740732f98997b4f3825a7377e3bf41cb6fcb3e270a59b2b376a426a92ccf55fc516699fe
-Depiction: https://manhtien9x.github.io/gofahud-repo/depiction.html
+Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-rootless.html
+
+Package: local.gofahud
+Name: GOFA HUD
+Version: 0.2.1~beta6~rh1
+Architecture: iphoneos-arm64e
+Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+ Tương thích: RootHide.
+ Phiên bản 0.2.1 beta6 rh1; cần rootless-compat >= 0.9.
+ Cần cài riêng ứng dụng GOFA 4.2.1.
+Maintainer: GOFA HUD Development
+Author: GOFA HUD contributors; GMapHUD base by chou
+Section: Tweaks
+Depends: firmware (>= 15.0), mobilesubstrate, ldid
+Tag: role::enduser
+Pre-Depends: rootless-compat(>= 0.9)
+Filename: local.gofahud_0.2.1~beta6~rh1_iphoneos-arm64e.deb
+Size: 471402
+MD5sum: 0be65925e76f16eb8d27a247dcc70d6f
+SHA1: 5233291975054653dcb8498e500ca6c5737e9ac4
+SHA256: 93ea7e2f90c024abe174651a3a700e3067ab542efbdc92aaa1b7584cfcecaa65
+SHA512: 84fdbae578f9582e1f56658ecfff1ccdecc2540337b5201b9a292b9f086a62c592f4ff31a26044a164ba793462da77e093c5bb2a3598e1de2a668c76b0beb36b
+Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-roothide.html
 

@@ -14,13 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install packaging tools
-        run: brew install dpkg ldid gnu-sed findutils coreutils
+        run: brew install dpkg gnu-sed findutils coreutils pkgconf libplist openssl@3
       - name: Use official RootHide Patcher
         shell: bash
         run: |
           git clone --depth 1 https://github.com/roothide/RootHidePatcher.git ci/roothide/official-patcher
           git -C ci/roothide/official-patcher rev-parse HEAD > ci/roothide/PATCHER-COMMIT.txt
-          export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+          git clone --depth 1 https://github.com/ProcursusTeam/ldid.git ci/roothide/procursus-ldid
+          export PKG_CONFIG_PATH="$(brew --prefix openssl@3)/lib/pkgconfig:$(brew --prefix libplist)/lib/pkgconfig"
+          make -C ci/roothide/procursus-ldid VERSION="$(git -C ci/roothide/procursus-ldid rev-parse --short HEAD)-procursus"
+          export PATH="$PWD/ci/roothide/procursus-ldid:$(brew --prefix coreutils)/libexec/gnubin:$PATH"
           sudo env PATH="$PATH" bash ci/roothide/official-patcher/patch.sh "$PWD/ci/roothide/input-rootless.deb" "$PWD/ci/roothide/patched.deb" AutoPatches
           dpkg-deb -R ci/roothide/patched.deb ci/roothide/staged
           python3 ci/roothide/finalize.py

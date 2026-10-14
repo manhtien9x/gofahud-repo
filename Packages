@@ -41,3 +41,24 @@ SHA256: f54173126ef8b099a91f14da8f7a234449a9865e26e3e0528d57b3aded1d8a7d
 SHA512: 0e74d2e4b396833602daea47b5d1dd213a9a94ed364f1569898be5202d05120a5303f3bb725a5f65b509d889aa6887fb76ccb3aa144cfddb9617d8770622b802
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-roothide.html
 
+Package: local.gofahud
+Name: GOFA HUD (iOS 14 - Taurine)
+Version: 0.2.1-2
+Architecture: iphoneos-arm
+Maintainer: GOFA HUD Development
+Author: GOFA HUD contributors; GMapHUD base by chou
+Section: Tweaks
+Depends: firmware (>= 14.0), firmware (<< 15.0), org.coolstar.libhooker
+Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+ Tương thích: iOS 14, Taurine Rootful, arm64. Cần GOFA 4.2.1.
+ Sửa dependency libhooker và loại bỏ probe reflection Swift gây văng GOFA.
+ Có log cài đặt và chẩn đoán; cần đối chiếu lại đăng nhập sau bản sửa.
+Tag: role::enduser
+Filename: local.gofahud_0.2.1-2_iphoneos-arm.deb
+Size: 138100
+MD5sum: fd57b08ebb3071b36d203b7cadd008b7
+SHA1: 6196d44de6b9b00afcf7d872273857fff9631d36
+SHA256: 1f12a40276ce26a01400f2e8d041096a1f985124db5fa9bf50603f60f1495330
+SHA512: b2dcc1a41932a6b406e339a795a555211ce2253acbce5c15f8d733579b6c6c4ee72c7251b08b4496403447ccf63a76f219ecea664fcbcde395c787842f6e213c
+Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-ios14.html
+

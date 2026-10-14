@@ -8,6 +8,8 @@
 #import "speed-presentation.h"
 #import "phone-interaction.h"
 #import "hud-live-state.h"
+#import "bubble-style.h"
+#import "background-policy.h"
 static int hudProducerToken=-1,hudReadyToken=-1,hudLimitToken=-1,hudCameraToken=-1;
 
 static UIWindow *overlay;
@@ -18,7 +20,7 @@ static BOOL openingGOFA;
 static BOOL dragging, wasGOFAForeground;
 static int foregroundToken=-1;
 static int showToken=-1;
-static UILabel *heading, *speedLabel, *limitLabel, *cameraLabel;
+static UILabel *heading, *speedLabel, *limitLabel, *cameraLabel, *unitLabel;
 static int speedToken=-1, limitToken=-1, cameraToken=-1, testToken=-1;
 static NSUserDefaults *settings;
 static void Refresh(void);
@@ -108,7 +110,7 @@ static BOOL GOFAForeground(void) {
         dragging=NO;
         dismissTarget.hidden=YES;
         if (overTarget) {
-            dismissed=YES; [settings setBool:NO forKey:@"phoneEnabled"];
+            dismissed=YES; [settings setBool:YES forKey:@"phoneDismissed"];
             overlay.hidden=YES; Log(@"phone bubble dismissed by drop target"); return;
         }
         [settings setDouble:center.x/MAX(1,self.view.bounds.size.width) forKey:@"phoneX"];
@@ -123,8 +125,14 @@ static BOOL GOFAForeground(void) {
     dismissTarget.frame=CGRectMake(self.view.bounds.size.width/2-30,self.view.bounds.size.height-self.view.safeAreaInsets.bottom-76,60,60);
     CGFloat x=[settings objectForKey:@"phoneX"] ? [settings doubleForKey:@"phoneX"] : .74;
     CGFloat y=[settings objectForKey:@"phoneY"] ? [settings doubleForKey:@"phoneY"] : .25;
-    bubble.center=CGPointMake(MAX(86,MIN(self.view.bounds.size.width-86,x*self.view.bounds.size.width)),
-        MAX(self.view.safeAreaInsets.top+48,MIN(self.view.bounds.size.height-self.view.safeAreaInsets.bottom-48,y*self.view.bounds.size.height)));
+    CGSize size=GOFAHUDBubbleSize(NO); bubble.bounds=(CGRect){CGPointZero,size};
+    GOFAHUDLayoutLabels(bubble,@[heading,speedLabel,limitLabel,cameraLabel],NO);
+    CGFloat k=GOFAHUDScale(NO);
+    unitLabel.frame=CGRectMake(speedLabel.frame.origin.x,CGRectGetMaxY(speedLabel.frame)+1*k,speedLabel.frame.size.width,10*k);
+    unitLabel.font=[UIFont systemFontOfSize:9*k]; unitLabel.hidden=YES;
+    UIEdgeInsets inset=self.view.safeAreaInsets;
+    bubble.center=CGPointMake(MAX(inset.left+size.width/2,MIN(self.view.bounds.size.width-inset.right-size.width/2,x*self.view.bounds.size.width)),
+        MAX(inset.top+size.height/2,MIN(self.view.bounds.size.height-inset.bottom-size.height/2,y*self.view.bounds.size.height)));
 }
 @end
 static UILabel *Label(CGRect frame, CGFloat size) {
@@ -134,12 +142,16 @@ static UILabel *Label(CGRect frame, CGFloat size) {
     [bubble addSubview:label]; return label;
 }
 static void Refresh(void) {
+    static int hostToken=-1; if(hostToken<0) notify_register_check(GVM_BACKGROUND_PHONE_SIGNAL,&hostToken);
     if (!overlay) return;
+    CGSize size=GOFAHUDBubbleSize(NO);
     BOOL foreground=GOFAForeground();
     if(foreground!=wasGOFAForeground) Log(foreground ? @"GOFA foreground: bubble hidden" : @"GOFA background: bubble restored");
-    if(wasGOFAForeground && !foreground) { dismissed=NO; [settings setBool:YES forKey:@"phoneEnabled"]; }
+    if(wasGOFAForeground && !foreground) { dismissed=NO; [settings setBool:NO forKey:@"phoneDismissed"]; }
     wasGOFAForeground=foreground;
-    overlay.hidden=Locked() || dismissed || foreground || openingGOFA;
+    overlay.hidden=!GOFAHUDEnabled(NO) || Locked() || dismissed || foreground || openingGOFA;
+    static NSUInteger styleRevision=NSUIntegerMax; if(styleRevision!=GOFAHUDPositionRevision(NO)) { styleRevision=GOFAHUDPositionRevision(NO); CGPoint pos=GOFAHUDPosition(NO); CGRect area=UIEdgeInsetsInsetRect(overlay.bounds,overlay.safeAreaInsets); CGPoint target=CGPointMake(CGRectGetMinX(area)+size.width/2+12+pos.x*MAX(0,area.size.width-size.width-24),CGRectGetMinY(area)+size.height/2+12+pos.y*MAX(0,area.size.height-size.height-24)); [settings setDouble:target.x/overlay.bounds.size.width forKey:@"phoneX"]; [settings setDouble:target.y/overlay.bounds.size.height forKey:@"phoneY"]; [overlay.rootViewController.view setNeedsLayout]; }
+    if(hostToken>=0) notify_set_state(hostToken,overlay.hidden ? 0 : (uint64_t)(NSProcessInfo.processInfo.systemUptime*1000));
     uint64_t state=0;
     NSDictionary *test=nil, *camera=nil;
     if (testToken>=0 && notify_get_state(testToken,&state)==NOTIFY_STATUS_OK)
@@ -162,28 +174,34 @@ static void Refresh(void) {
     }
     if (cameraToken>=0 && notify_get_state(cameraToken,&state)==NOTIFY_STATUS_OK)
         camera=GOFADecodeCamera(state,NSProcessInfo.processInfo.systemUptime);
-    heading.text=test ? @"GOFA · TEST" : waitingSpeed ? @"GOFA · CHỜ DỮ LIỆU" : @"GOFA";
+    heading.text=test ? @"GOFA · TEST" : @"GOFA";
     heading.textColor=test ? UIColor.systemYellowColor : UIColor.whiteColor;
     speedLabel.text=speed ? speed.stringValue : @"--";
     limitLabel.text=limit ? limit.stringValue : @"--";
+    GOFAHUDWarningStyle(bubble,speed,limit);
     GVMWarning warning=GVMWarningFor(speed,limit);
     speedLabel.textColor=warning==GVMWarningOver ? UIColor.systemRedColor : warning==GVMWarningNear ? UIColor.systemYellowColor : UIColor.whiteColor;
-    if (test) cameraLabel.text=@"CAM thử · 150 m";
-    else if(hudActive && GOFAHUDCameraDecode(hudCamera,NSProcessInfo.processInfo.systemUptime)) {
-        NSDictionary *hud=GOFAHUDCameraDecode(hudCamera,NSProcessInfo.processInfo.systemUptime);
-        NSArray *names=@[@"",@"CAM giao thông",@"CAM phạt",@"CAM đèn đỏ",@"CAM AI"];
-        unsigned kind=[hud[@"kind"] unsignedIntValue];
-        cameraLabel.text=kind ? [NSString stringWithFormat:@"%@ · %@ m",names[kind],hud[@"meters"]] : @"Chưa có cảnh báo CAM";
-    }
-    else if (camera) {
-        NSArray *names=@[@"",@"CAM tốc độ",@"CAM đèn đỏ",@"CAM giám sát"];
-        cameraLabel.text=[NSString stringWithFormat:@"%@ · %@ m",names[[camera[@"kind"] unsignedIntegerValue]],camera[@"meters"]];
-    } else cameraLabel.text=@"Chờ cảnh báo GOFA";
+    NSNumber *meters=nil; BOOL cameraAvailable=NO;
+    if(test) { meters=@150; cameraAvailable=YES; }
+    else if(hudActive) { NSDictionary *hud=GOFAHUDCameraDecode(hudCamera,NSProcessInfo.processInfo.systemUptime); cameraAvailable=[hud[@"kind"] unsignedIntValue]>0; meters=hud[@"meters"]; }
+    else if(camera) { cameraAvailable=[camera[@"kind"] unsignedIntValue]>0; meters=camera[@"meters"]; }
+    static int residentialToken=-1,noPassingToken=-1;
+    if(residentialToken<0) notify_register_check(GOFAHUDResidentialName,&residentialToken); if(noPassingToken<0) notify_register_check(GOFAHUDNoPassingName,&noPassingToken);
+    uint64_t residentialState=0,noPassingState=0; notify_get_state(residentialToken,&residentialState); notify_get_state(noPassingToken,&noPassingState);
+    NSDictionary *residential=hudActive ? GOFAHUDRoadDecode(residentialState,NSProcessInfo.processInfo.systemUptime) : nil, *noPassing=hudActive ? GOFAHUDRoadDecode(noPassingState,NSProcessInfo.processInfo.systemUptime) : nil;
+    if(test) { residential=@{@"sign":@12,@"meters":@300}; noPassing=@{@"sign":@14,@"meters":@400}; }
+    GOFAHUDExtraAlerts(NO,residential,noPassing);
+    GOFAHUDCameraVisible(NO,cameraAvailable);
+    static CGSize lastSize; size=GOFAHUDBubbleSize(NO);
+    static NSUInteger lastLayoutRevision; if(!dragging && (!CGSizeEqualToSize(size,lastSize) || lastLayoutRevision!=GOFAHUDStyleRevision())) { lastSize=size; lastLayoutRevision=GOFAHUDStyleRevision(); [overlay.rootViewController.view setNeedsLayout]; [overlay.rootViewController.view layoutIfNeeded]; }
+    GOFAHUDLayoutLabels(bubble,@[heading,speedLabel,limitLabel,cameraLabel],NO);
+    GOFAHUDSetCamera(bubble,cameraLabel,meters,cameraAvailable);
+
 }
 static void StartWindow(void) {
     if (overlay) return;
     settings=[[NSUserDefaults alloc] initWithSuiteName:@"local.gofahud"];
-    dismissed=[settings objectForKey:@"phoneEnabled"] && ![settings boolForKey:@"phoneEnabled"];
+    dismissed=[settings boolForKey:@"phoneDismissed"];
     UIWindowScene *scene=nil;
     for (UIScene *candidate in UIApplication.sharedApplication.connectedScenes)
         if ([candidate isKindOfClass:UIWindowScene.class] && ((UIWindowScene *)candidate).screen==UIScreen.mainScreen) { scene=(UIWindowScene *)candidate; break; }
@@ -204,7 +222,7 @@ static void StartWindow(void) {
     [controller.view addSubview:dismissTarget];
     heading=Label(CGRectMake(8,4,156,18),11);
     speedLabel=Label(CGRectMake(6,22,92,42),34);
-    UILabel *unit=Label(CGRectMake(6,62,92,12),9); unit.text=@"km/h";
+    unitLabel=Label(CGRectMake(6,62,92,12),9); unitLabel.text=@"km/h";
     limitLabel=Label(CGRectMake(108,24,48,48),22);
     limitLabel.backgroundColor=UIColor.whiteColor; limitLabel.textColor=UIColor.blackColor;
     limitLabel.layer.borderColor=UIColor.systemRedColor.CGColor; limitLabel.layer.borderWidth=4;
@@ -220,7 +238,7 @@ static void StartWindow(void) {
     notify_register_check(GOFAHUDLimitName,&hudLimitToken); notify_register_check(GOFAHUDCameraName,&hudCameraToken);
     notify_register_dispatch("local.gofahud.gofa.foreground",&foregroundToken,dispatch_get_main_queue(), ^(int token) { (void)token; Refresh(); });
     notify_register_dispatch("local.gofahud.phone.show",&showToken,dispatch_get_main_queue(), ^(int token) {
-        (void)token; dismissed=NO; [settings setBool:YES forKey:@"phoneEnabled"]; Refresh();
+        (void)token; dismissed=NO; [settings setBool:NO forKey:@"phoneDismissed"]; Refresh();
     });
     [controller.view setNeedsLayout]; [controller.view layoutIfNeeded];
     Refresh();

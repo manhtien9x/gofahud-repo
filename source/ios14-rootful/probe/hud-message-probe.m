@@ -13,7 +13,7 @@
 #import "speed-state.h"
 #import "hud-live-state.h"
 #include "hud-protocol.h"
-static int producerToken=-1,hudLimitToken=-1,hudCameraToken=-1,hudSpeedToken=-1;
+static int producerToken=-1,hudLimitToken=-1,hudCameraToken=-1,hudSpeedToken=-1,residentialToken=-1,noPassingToken=-1;
 static NSNumber *previousHUDSpeed;
 static BOOL HUDSpeedChanged;
 static void Publish(int token,const char *name,uint64_t value) { if(token>=0 && notify_set_state(token,value)==NOTIFY_STATUS_OK) notify_post(name); }
@@ -58,6 +58,10 @@ static void PublishSigns(id current,double received) {
     uint32_t sign=GOFAHUDIsCamera(v[1]) ? v[1] : GOFAHUDIsCamera(v[3]) ? v[3] : 0;
     uint32_t distance=sign==v[1] && sign ? v[2] : sign ? v[4] : 0;
     Publish(hudCameraToken,GOFAHUDCameraName,GOFAHUDCameraEncode(sign,distance,received));
+    uint32_t roadSigns[3]={v[0],v[1],v[3]},meters[3]={0,v[2],v[4]};
+    uint64_t residential=0,noPassing=0;
+    for(unsigned i=0;i<3;i++) { if(roadSigns[i]==12 || roadSigns[i]==13) residential=GOFAHUDRoadEncode(roadSigns[i],meters[i],received); if(roadSigns[i]==14 || roadSigns[i]==15) noPassing=GOFAHUDRoadEncode(roadSigns[i],meters[i],received); }
+    Publish(residentialToken,GOFAHUDResidentialName,residential); Publish(noPassingToken,GOFAHUDNoPassingName,noPassing);
     Publish(producerToken,GOFAHUDProducerName,(uint64_t)getpid());
 }
 void GOFAHUDOnSourceEvent(double received,NSNumber *processedKmH) {
@@ -133,6 +137,8 @@ __attribute__((constructor)) static void Start(void) {
     notify_register_check(GOFAHUDProducerName,&producerToken); notify_register_check(GOFAHUDLimitName,&hudLimitToken);
     notify_register_check(GOFAHUDCameraName,&hudCameraToken); notify_register_check(GVMSpeedStateName,&hudSpeedToken);
     Publish(producerToken,GOFAHUDProducerName,0); Publish(hudLimitToken,GOFAHUDLimitName,0); Publish(hudCameraToken,GOFAHUDCameraName,0);
+    notify_register_check(GOFAHUDResidentialName,&residentialToken); notify_register_check(GOFAHUDNoPassingName,&noPassingToken);
+    Publish(residentialToken,GOFAHUDResidentialName,0); Publish(noPassingToken,GOFAHUDNoPassingName,0);
     Publish(hudSpeedToken,GVMSpeedStateName,0);
     void *lib=dlopen("/usr/lib/libsubstrate.dylib",RTLD_NOW);
     void (*hook)(Class,SEL,IMP,IMP *)=lib ? dlsym(lib,"MSHookMessageEx") : NULL;

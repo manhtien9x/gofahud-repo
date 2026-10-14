@@ -1,0 +1,38 @@
+{
+  "package": "local.gofahud_0.2.0_iphoneos-arm64.deb",
+  "version": "0.2.0",
+  "architecture": "iphoneos-arm64",
+  "bytes": 146880,
+  "sha256": "1ff297895684665a60714d7bcfd4ea28a8a28045dd8e361d6349ffabddf67862",
+  "verification": "Debian structure, paths, ownership, scripts and all 8 Mach-O code signatures/page hashes passed",
+  "code_directory_hashes": {
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib": "019b5e049edb4493a8539d2ae0f0d2596648f73a",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib": "c73177dcb21f8b3e8ffc101d9575765caee0ff8f",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib": "2095a6d9097ba91534ef1ddd432311d9e99ef65d",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib": "7d94f5be2b16650e655173f61324897dbf9f4431",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib": "c7e4b3d14785575bbde57e80c244d867a3600aed",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib": "22fd542cffa12a2060c2e091cc7d412e5ae4cac6",
+    "var/jb/usr/libexec/gofahud-tests/gofahud-native-speed-bridge": "65150526ed9986160703690a0485d1ca61a2f271",
+    "var/jb/usr/libexec/gofahud-tests/gofahud-test-speed": "9765366fa0cc5a2b7b5b6cbff7389dc5974b9a63"
+  },
+  "files_sha256": {
+    "var/jb/Library/LaunchDaemons/local.gofahud.drive-recorder.plist": "80addacb55df7065a0c35906b7e4d60f1f0c39f07d13dbd8adf147f5a61ab381",
+    "var/jb/Library/LaunchDaemons/local.gofahud.native-speed.plist": "394f922446d92e36e11e3753da8f737935fd64c2e4744a8247a2b16c8a7c5293",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib": "460e78791bb1b6618eda7d1edd59dd118d98358d41498f005cf2e4a21495e2f4",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.plist": "0e576bc3c29cf58fa3fa9e85b825c828dd115ff50e33a0409d50966da45a014c",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib": "eba4ff164ddee1aab5ce5520c2c4ed0e7a4a5a308afc0b34a129d59d38e115c4",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.plist": "61344b94952c9851f410f1a0916fb18201fc139554dc549624b2f072e372a1ee",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib": "44c183f0c9a5bb6d40fa5b1f6796b0f473589045ccefc8fc594f016d3f9d76cc",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.plist": "b283a16bdb5365c012b29c1dfa19ced86b693d2945672724a7cc407c21505455",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib": "d5fa3417405f03c10399a9b5d5968e7ebabe15959d2dd7a1ed99eb3083fb1822",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.plist": "9e31ecbec06b8928076542ce2582e86eaf4990402dfe1e21516e4b6e49e182cc",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib": "cf8aa4769ca3012843af48f0da6a7890c249579d9f5f20cf9e0df06562d78d3a",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.plist": "e5a0dfc5ec82c94ab61b952d50fdeb860ec33de27e0d712c36eb1930479dd6cc",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib": "0a0509952108a931b16e42138eaa47aedce6164415dc8098f4ed1161e586ec6b",
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.plist": "4f6dc3dfce77d213ff2a80a92a6918cb0a9ecd358e80579ce2a64daffd928d17",
+    "var/jb/usr/libexec/gofahud-tests/gofahud-native-speed-bridge": "8d310f18fd22acba77989d11c10f60e0858ef705247d3b4c5e54b3292e10a84c",
+    "var/jb/usr/libexec/gofahud-tests/gofahud-test-speed": "79d13109e032da5b0658e9e466b78eec70551117afee47a9d4d66d3243296adb",
+    "var/jb/usr/share/doc/local.gofahud/LICENSE": "510656fbcecb8a5a2bb5e7bc1a8e10c2596a55c864b0be6f7fb25f8589a926fb",
+    "var/jb/usr/share/doc/local.gofahud/README.vi.md": "a7c2ea587a1e526a4a6d46a72476134b5aa8b7dbe82beff20163881eb36b1e80"
+  }
+}

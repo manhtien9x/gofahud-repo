@@ -1,17 +1,25 @@
-#!/bin/sh
-export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-export TZ=Asia/Ho_Chi_Minh
-mkdir -p /var/mobile/Library/Logs
-log=/var/mobile/Library/Logs/GofaHUD-install.log
-stamp() { date '+%Y-%m-%dT%H:%M:%S%z'; }
-printf '%s script=%s action=%s version=0.2.1-2 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log"
-trap 'result=$?; printf "%s script=%s exit=%s\n" "$(stamp)" "$0" "$result" >> "$log"' EXIT
+#!/var/jb/bin/sh
+set -eu
+export PATH=/var/jb/usr/bin:/var/jb/bin:/usr/bin:/bin:/usr/sbin:/sbin
 [ "${1:-}" = configure ] || exit 0
-for label in native-speed drive-recorder diagnostics; do
- launchctl bootout "system/local.gofahud.$label" >/dev/null 2>&1 || true
+for file in \
+    /var/jb/Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib \
+    /var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib \
+    /var/jb/Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib \
+    /var/jb/Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib \
+    /var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib \
+    /var/jb/Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib \
+    /var/jb/usr/libexec/gofahud-tests/gofahud-native-speed-bridge \
+    /var/jb/usr/libexec/gofahud-tests/gofahud-test-speed
+do
+    digest=$(/var/jb/usr/bin/ldid -h "$file" | sed -n 's/^CDHash=//p')
+    case "$digest" in ''|*[!0-9a-f]*) echo "Invalid code signature: $file" >&2; exit 1;; esac
+    [ "${#digest}" -eq 40 ] || exit 1
+    /var/jb/usr/bin/jbctl trustcache add "$digest"
 done
-for label in native-speed drive-recorder diagnostics; do
- launchctl bootstrap system "/Library/LaunchDaemons/local.gofahud.$label.plist" >> "$log" 2>&1 || exit 1
+for label in native-speed drive-recorder; do
+    launchctl bootout "system/local.gofahud.$label" >/dev/null 2>&1 || true
+    launchctl bootstrap system "/var/jb/Library/LaunchDaemons/local.gofahud.$label.plist"
 done
-echo 'GOFA HUD iOS 14 beta installed. Respring, open GOFA 4.2.1, then return Home.' | tee -a "$log"
+echo 'GOFA HUD installed. Respring to load the bubbles, then reopen GOFA.'
 exit 0

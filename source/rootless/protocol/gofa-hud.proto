@@ -1,0 +1,17 @@
+syntax = "proto3";
+package gofahud;
+// Reconstructed contract: official HUD docs + Android 4.2.1 generated field numbers.
+// iOS 4.2.1 runtime confirms matching property names and UInt32 types.
+message SignMessage {
+  uint32 position_1 = 1;
+  uint32 position_2 = 2;
+  uint32 distance_2 = 3;
+  uint32 position_3 = 4;
+  uint32 distance_3 = 5;
+}
+message SpeedMessage { uint32 speed = 1; }
+message SoundMessage { uint32 sound_id = 1; }
+message OverSpeedMessage {
+  bool is_over_speed_limit = 1;
+  uint32 type_sound = 2;
+}

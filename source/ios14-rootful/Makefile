@@ -12,19 +12,19 @@ GofaLifecycle_FILES = tweak/gofa-lifecycle.m
 GofaLifecycle_CFLAGS = -fobjc-arc -O2 -UNDEBUG -Icommon -Wall -Wextra
 GofaLifecycle_FRAMEWORKS = Foundation CoreFoundation UIKit QuartzCore CoreGraphics CoreLocation CoreBluetooth
 
-GofaLaunchHelper_FILES = tweak/phone-launch-helper.m
+GofaLaunchHelper_FILES = tweak/phone-launch-helper.m tweak/background-supervisor.m
 GofaLaunchHelper_CFLAGS = -fobjc-arc -O2 -UNDEBUG -Icommon -Wall -Wextra
 GofaLaunchHelper_FRAMEWORKS = Foundation CoreFoundation UIKit QuartzCore CoreGraphics CoreLocation CoreBluetooth
 
-GofaPhoneOverlay_FILES = tweak/phone-overlay.m common/speed-state.m common/camera-state.m common/test-state.m common/speed-presentation.m common/phone-interaction.m common/hud-live-state.m
+GofaPhoneOverlay_FILES = tweak/phone-overlay.m common/bubble-style.m common/speed-state.m common/camera-state.m common/test-state.m common/speed-presentation.m common/phone-interaction.m common/hud-live-state.m
 GofaPhoneOverlay_CFLAGS = -fobjc-arc -O2 -UNDEBUG -Icommon -Wall -Wextra
 GofaPhoneOverlay_FRAMEWORKS = Foundation CoreFoundation UIKit QuartzCore CoreGraphics CoreLocation CoreBluetooth
 
-GofaCarplayGlobal_FILES = tweak/carplay-global-overlay.m tweak/carplay-overlay.m common/speed-state.m common/hud-live-state.m common/speed-presentation.m
+GofaCarplayGlobal_FILES = tweak/carplay-global-overlay.m tweak/carplay-overlay.m common/test-state.m common/bubble-style.m common/speed-state.m common/hud-live-state.m common/speed-presentation.m
 GofaCarplayGlobal_CFLAGS = -fobjc-arc -O2 -UNDEBUG -Icommon -Wall -Wextra
 GofaCarplayGlobal_FRAMEWORKS = Foundation CoreFoundation UIKit QuartzCore CoreGraphics CoreLocation CoreBluetooth CarPlay
 
-GofaCarplayOverlay_FILES = tweak/carplay-overlay.m common/speed-state.m common/hud-live-state.m common/speed-presentation.m
+GofaCarplayOverlay_FILES = tweak/carplay-overlay.m common/test-state.m common/bubble-style.m common/speed-state.m common/hud-live-state.m common/speed-presentation.m
 GofaCarplayOverlay_CFLAGS = -fobjc-arc -O2 -UNDEBUG -Icommon -Wall -Wextra
 GofaCarplayOverlay_FRAMEWORKS = Foundation CoreFoundation UIKit QuartzCore CoreGraphics CoreLocation CoreBluetooth CarPlay
 
@@ -40,3 +40,12 @@ gofahud-test-speed_INSTALL_PATH = /usr/libexec/gofahud-tests
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 include $(THEOS_MAKE_PATH)/tool.mk
+
+BUNDLE_NAME = GofaHUDPrefs
+GofaHUDPrefs_FILES = prefs/controller.m prefs/full-log-export.m common/bubble-style.m common/test-state.m
+GofaHUDPrefs_CFLAGS = -fobjc-arc -Icommon
+GofaHUDPrefs_FRAMEWORKS = UIKit Foundation CoreFoundation
+GofaHUDPrefs_PRIVATE_FRAMEWORKS = Preferences
+GofaHUDPrefs_INSTALL_PATH = /Library/PreferenceBundles
+GofaHUDPrefs_RESOURCE_DIRS = prefs
+include $(THEOS_MAKE_PATH)/bundle.mk

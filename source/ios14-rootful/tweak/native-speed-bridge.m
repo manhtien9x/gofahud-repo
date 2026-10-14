@@ -25,11 +25,18 @@ static void PrepareGOFA(NSString *path) {
         found=YES;
         pid_t pid=processes[i].kp_proc.p_pid;
         if(pid<=1 || pid==PreparedPID) break;
-        // Taurine/libhooker prepares injected apps; Dopamine jbctl is unavailable.
-        if (access("/usr/lib/libsubstrate.dylib", R_OK)==0 && ReadyToken>=0 &&
-            notify_set_state(ReadyToken,(uint64_t)pid)==NOTIFY_STATUS_OK) {
-            notify_post("local.gofahud.source.ready"); PreparedPID=pid;
-            fprintf(stderr,"Taurine GOFA source available pid=%d\n",pid);
+        char number[32]; snprintf(number,sizeof(number),"%d",pid);
+        char *args[]={"/usr/bin/jbctl","proc_set_debugged",number,NULL};
+        pid_t child=0; int result=0;
+        int spawned=posix_spawn(&child,args[0],NULL,NULL,args,environ);
+        pid_t waited=-1;
+        if(spawned==0) do { waited=waitpid(child,&result,0); } while(waited<0 && errno==EINTR);
+        if(spawned==0 && waited==child && WIFEXITED(result) && WEXITSTATUS(result)==0) {
+            if(ReadyToken>=0 && notify_set_state(ReadyToken,(uint64_t)pid)==NOTIFY_STATUS_OK) {
+                notify_post("local.gofahud.source.ready"); PreparedPID=pid; fprintf(stderr,"GOFA source prepared pid=%d\n",pid);
+            }
+        } else {
+            fprintf(stderr,"GOFA preparation failed spawn=%d wait=%d status=%d errno=%d\n",spawned,(int)waited,result,errno);
         }
         break;
     }

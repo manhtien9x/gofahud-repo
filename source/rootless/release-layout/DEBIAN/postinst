@@ -1,0 +1,30 @@
+#!/var/jb/bin/sh
+export PATH=/var/jb/usr/bin:/var/jb/bin:/usr/bin:/bin:/usr/sbin:/sbin
+log_dir=/var/mobile/Library/Logs
+mkdir -p "$log_dir"
+log_file="$log_dir/GofaHUD-install.log"
+touch "$log_file"; chmod 0644 "$log_file"
+stamp() { TZ=Asia/Ho_Chi_Minh date '+%Y-%m-%dT%H:%M:%S%z'; }
+printf '%s script=%s action=%s version=0.3.1 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log_file"
+trap 'result=$?; printf "%s script=%s exit=%s\n" "$(stamp)" "$0" "$result" >> "$log_file"' EXIT
+run_output=$(/var/jb/bin/sh -s -- "$@" 2>&1 <<'GOFAHUD_SCRIPT_BODY'
+set -eu
+export PATH=/var/jb/usr/bin:/var/jb/bin:/usr/bin:/bin:/usr/sbin:/sbin
+[ "${1:-}" = configure ] || exit 0
+# Exact CodeDirectory hashes for every installed Mach-O slice.
+for digest in c4209b84689e196dc917ee60efb43dc13f4c37e7 938fd2270f742a28058d9ad688fd2cad9030ce53 e91b9b56a20bf9e9b01270b81dda4383716b634f 02b47aabc87822436eab865deb584304d6dd9f61 fd8fa4539a4816fa8ab374b1c6fd4d58f1e33d02 92ef3aeedafc3a928181b6b05e89fb60a396c931 d98ed874c8c409b60d909f8bc7b070c9fac9a280 78c4931cd89478de430aeb420ddc2f4c8113f2af c7e4b3d14785575bbde57e80c244d867a3600aed b12eab6e794697f82ba8588b4b76c8e402acdbd0 ac7ab3be639ae249e27e865dc132abb02722b0cb d1ff04637a5fa25a8ae61596b18ba6da8372c8a3 65150526ed9986160703690a0485d1ca61a2f271 9765366fa0cc5a2b7b5b6cbff7389dc5974b9a63 69934a0d8cc8fe10cc6684f91dcc5ab546d8e8d6 ed48a58329d26e7c1eeeada73158bb98f4b2e615; do
+ /var/jb/usr/bin/jbctl trustcache add "$digest" || exit 1
+done
+for label in native-speed drive-recorder diagnostics; do
+    launchctl bootout "system/local.gofahud.$label" >/dev/null 2>&1 || true
+    launchctl bootstrap system "/var/jb/Library/LaunchDaemons/local.gofahud.$label.plist"
+done
+echo 'GOFA HUD installed. Respring to load the bubbles, then reopen GOFA.'
+exit 0
+
+GOFAHUD_SCRIPT_BODY
+)
+run_result=$?
+printf "%s\n" "$run_output" >> "$log_file"
+printf "%s\n" "$run_output"
+exit "$run_result"

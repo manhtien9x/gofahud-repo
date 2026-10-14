@@ -1,0 +1,1 @@
+Adapted GMapHUD size validation and layout selection. Upstream: bechou0410/gmaphud commit 8d4ff89957346ba07d6f3882cf4a4910e4192ab8, MIT license. UI and data source code are adapted for the independent GOFA HUD system overlays.

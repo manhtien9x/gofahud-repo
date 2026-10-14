@@ -1,34 +1,28 @@
-# GOFA HUD
+# GOFA HUD 0.3.1
 
-Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+Bong bóng cảnh báo GOFA trên iPhone và CarPlay.
 
 ## Tính năng
 
-- Hiển thị dữ liệu tốc độ, biển giới hạn từ GOFA khi chuyển ứng dụng.
-- Kéo đổi vị trí; chạm mở GOFA trên màn hình đang sử dụng.
-- Kéo vào X để tắt. Mở GOFA rồi chuyển ứng dụng để hiện lại.
-- Tự ẩn khi GOFA ở phía trước.
+- **Tốc độ và biển giới hạn:** Nhận dữ liệu từ GOFA, kể cả khi ứng dụng chạy nền. Bong bóng nổi trên iPhone và các ứng dụng CarPlay.
+- **Bong bóng tự co giãn:** Không có cảnh báo thì thu gọn. Khi GOFA cung cấp camera, khu dân cư hoặc cấm vượt, tự thêm ô biểu tượng và khoảng cách bên dưới.
+- **Tùy chỉnh trong Cài đặt:** Chọn Ngang/Dọc, kích cỡ 50–150%, vị trí, thứ tự các phần và màu sáng/tối. Thiết lập riêng cho iPhone và CarPlay; có preview minh họa.
+- **Mở GOFA bằng một chạm:** Chạm để mở GOFA trên CarPlay khi đang kết nối xe, hoặc trên iPhone khi không dùng CarPlay.
+- **Kéo để di chuyển hoặc tắt:** Kéo đổi vị trí. Kéo vào dấu X để tắt; mở lại GOFA rồi chuyển ứng dụng để bong bóng hiện lại.
+- **Cảnh báo vượt tốc độ:** Màu tốc độ đổi khi gần/vượt giới hạn. Có tùy chọn viền cảnh báo trên bong bóng hoặc màn hình.
+- **Tự động hóa:** Tùy chọn tự mở GOFA và tự thoát sau 20 giây ngắt CarPlay; kết nối lại sẽ hủy đếm giờ.
+- **Chẩn đoán và xuất TXT:** Xuất nguyên nội dung các tệp đọc được trong Logs, CrashReporter và log GOFA vào một TXT. Có SHA-256, thời gian và danh sách phần thiếu; không tự tải lên mạng.
 
-## Phiên bản
+## Các gói
 
-| Phiên bản | Tương thích | Ghi chú |
-| --- | --- | --- |
-| 0.2.1-2 | iOS 14 / Taurine Rootful | arm64; GOFA 4.2.1; org.coolstar.libhooker; sửa dependency và probe Swift gây văng app. |
-| 0.2.1 | Rootless | Dopamine, iOS 15 và 16; một gói `iphoneos-arm64` có cả arm64 + arm64e; có log cài đặt và chẩn đoán. |
-| 0.2.1 | RootHide | `iphoneos-arm64e`; cần rootless-compat >= 0.9; có log cài đặt và chẩn đoán. |
+- [Rootless](./GOFAHUD-0.3.1-rootless.deb): iOS 15–16, Dopamine Rootless.
+- [RootHide](./GOFAHUD-0.3.1-roothide.deb): RootHide; cần rootless-compat từ 0.9.
+- [iOS 14 Rootful](./GOFAHUD-0.3.1-rootful.deb): Dành cho iOS 14 Rootful.
 
 ## Cài đặt
 
-Mở https://manhtien9x.github.io/gofahud-repo/ bằng Safari, bấm **Thêm vào Sileo**. Làm mới nguồn và cài GOFA HUD đúng kiến trúc của môi trường jailbreak.
+Thêm https://manhtien9x.github.io/gofahud-repo/ vào Sileo hoặc Zebra, cài đúng gói, Respring và mở GOFA. Cấp quyền vị trí Luôn luôn và Vị trí chính xác. Tùy chỉnh tại Cài đặt → GOFA HUD.
 
-Cài xong Respring, mở GOFA và cấp quyền vị trí **Luôn luôn**, bật **Vị trí chính xác**. Cần cài riêng GOFA 4.2.1.
+Các gói mới iOS14.1/16.3/16.7 chưa kiểm thử lại thực tế; cảnh báo dân cư/cấm vượt thật cần đối chiếu. Không xác nhận iOS17/18.
 
-Ba gói dành cho ba môi trường khác nhau. Đây là bản thử nghiệm; chưa xác nhận tương thích với mọi phiên bản iOS. Cảnh báo camera thực tế còn cần kiểm chứng. Bản Rootless 0.2.1 sửa lỗi nạp thư viện khiến CarPlay không kết nối được trên bản cũ.
-
-Gỡ gói trong Sileo rồi Respring. Log chẩn đoán nằm trong `/var/mobile/Library/Logs/`.
-
-Tham khảo nền tảng GMapHUD của chou. Xem [LICENSE](LICENSE).
-
-## Bản iOS 14
-
-Taurine Rootful, iOS 14, arm64; chưa có arm64e. Đã có bong bóng trên iPhone và CarPlay; đăng nhập sau bản sửa 0.2.1-2 cần xác nhận lại. Log tại `/var/mobile/Library/Logs/`; crash GOFA trong `CrashReporter`.
+Mã tích hợp từ GMapHUD của chou theo giấy phép MIT được ghi trong source/upstream.

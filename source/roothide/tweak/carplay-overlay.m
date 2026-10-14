@@ -4,13 +4,18 @@
 #import "speed-state.h"
 #import "hud-live-state.h"
 #import "speed-presentation.h"
+#import "bubble-style.h"
+#import "test-state.h"
+#import "background-policy.h"
 static int speedToken=-1,limitToken=-1,cameraToken=-1,producerToken=-1,readyToken=-1;
 static NSMapTable<CPWindow *,UIView *> *cards;
 static NSHashTable<CPWindow *> *knownWindows;
 static int positionToken=-1;
 static int enabledToken=-1,showToken=-1;
 static int carActiveToken=-1;
-static const CGFloat CardScale=.7,CardWidth=103.6,CardHeight=58.8;
+static const CGFloat CardScale=.7;
+#define CardWidth (GOFAHUDBubbleSize(YES).width)
+#define CardHeight (GOFAHUDBubbleSize(YES).height)
 static CGRect CardRect(CGFloat x,CGFloat y,CGFloat w,CGFloat h) { return CGRectMake(x*CardScale,y*CardScale,w*CardScale,h*CardScale); }
 static void InitializeCarControls(void) {
     if(enabledToken>=0) return;
@@ -61,10 +66,7 @@ void GOFACarHUDInitializeSource(void) {
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.titleLabel.frame=CardRect(4,3,140,16);
-    self.speedLabel.frame=CardRect(4,21,94,38);
-    self.limitLabel.frame=CardRect(103,21,38,38);
-    self.cameraLabel.frame=CardRect(4,64,140,15);
+    GOFAHUDLayoutLabels(self,@[self.titleLabel,self.speedLabel,self.limitLabel,self.cameraLabel],YES);
 }
 - (void)refresh {
     UIWindow *window=self.window;
@@ -72,7 +74,19 @@ void GOFACarHUDInitializeSource(void) {
     InitializeCarControls();
     uint64_t enabled=0; notify_get_state(enabledToken,&enabled);
     uint64_t carActive=0; notify_get_state(carActiveToken,&carActive);
-    if(enabled==1 || carActive==1) { self.hidden=YES; self.dismissTarget.hidden=YES; return; }
+    if(!GOFAHUDEnabled(YES) || enabled==1 || carActive==1) { [self.superview viewWithTag:41060].hidden=YES; self.hidden=YES; self.dismissTarget.hidden=YES; return; }
+    double now=NSProcessInfo.processInfo.systemUptime;
+    static int hostToken=-1,testToken=-1; if(hostToken<0) notify_register_check(GVM_BACKGROUND_SIGNAL,&hostToken); if(testToken<0) notify_register_check(GVMTestStateName,&testToken); if(hostToken>=0) notify_set_state(hostToken,(uint64_t)(now*1000)); NSDictionary *test=GVMDecodeTest(ReadState(testToken),now);
+    uint64_t cameraProducer=ReadState(producerToken),cameraReady=ReadState(readyToken);
+    NSDictionary *camera=cameraProducer && cameraProducer==cameraReady ? GOFAHUDCameraDecode(ReadState(cameraToken),now) : nil;
+    BOOL cameraAvailable=test || [camera[@"kind"] unsignedIntValue]>0;
+    static int residentialToken=-1,noPassingToken=-1;
+    if(residentialToken<0) notify_register_check(GOFAHUDResidentialName,&residentialToken); if(noPassingToken<0) notify_register_check(GOFAHUDNoPassingName,&noPassingToken);
+    uint64_t residentialState=0,noPassingState=0; notify_get_state(residentialToken,&residentialState); notify_get_state(noPassingToken,&noPassingState);
+    NSDictionary *residential=cameraProducer && cameraProducer==cameraReady ? GOFAHUDRoadDecode(residentialState,now) : nil, *noPassing=cameraProducer && cameraProducer==cameraReady ? GOFAHUDRoadDecode(noPassingState,now) : nil;
+    if(test) { residential=@{@"sign":@12,@"meters":@300}; noPassing=@{@"sign":@14,@"meters":@400}; }
+    GOFAHUDExtraAlerts(YES,residential,noPassing);
+    GOFAHUDCameraVisible(YES,cameraAvailable);
     UILayoutGuide *guide=[window isKindOfClass:CPWindow.class] ? ((CPWindow *)window).mapButtonSafeAreaLayoutGuide : nil;
     CGRect area=guide ? guide.layoutFrame : CGRectZero;
     if(guide.owningView && guide.owningView!=window) area=[guide.owningView convertRect:area toView:window];
@@ -83,26 +97,27 @@ void GOFACarHUDInitializeSource(void) {
     uint64_t position=0;
     if(positionToken<0) notify_register_check("local.gofahud.carplay.position",&positionToken);
     notify_get_state(positionToken,&position);
+    static NSUInteger styleRevision=NSUIntegerMax; if(styleRevision!=GOFAHUDPositionRevision(YES)) { styleRevision=GOFAHUDPositionRevision(YES); CGPoint p=GOFAHUDPosition(YES); position=(1ull<<32) | (uint64_t)(p.x*65535) | ((uint64_t)(p.y*65535)<<16); notify_set_state(positionToken,position); }
     CGFloat x=position&(1ull<<32) ? (CGFloat)(position&65535)/65535 : 1;
     CGFloat y=position&(1ull<<32) ? (CGFloat)((position>>16)&65535)/65535 : 0;
     CGRect frame=CGRectMake(CGRectGetMinX(area)+8+x*MAX(0,area.size.width-CardWidth-16),CGRectGetMinY(area)+8+y*MAX(0,area.size.height-CardHeight-16),CardWidth,CardHeight);
     if(!self.dragging && !CGRectEqualToRect(self.frame,frame)) self.frame=frame;
-    double now=NSProcessInfo.processInfo.systemUptime;
+    GOFAHUDLayoutLabels(self,@[self.titleLabel,self.speedLabel,self.limitLabel,self.cameraLabel],YES);
     uint64_t producer=ReadState(producerToken),ready=ReadState(readyToken),rawSpeed=ReadState(speedToken);
     BOOL active=producer!=0 && producer==ready;
     NSNumber *speed=active ? GVMDecodeSample(rawSpeed,now,YES) : nil;
     BOOL waiting=active && !speed;
     if(waiting) speed=GOFAHUDRetainedZero(rawSpeed,now,producer,ready);
     NSNumber *limit=GOFAHUDRetainedLimit(ReadState(limitToken),now,producer,ready);
-    self.titleLabel.text=waiting ? @"GOFA · CHỜ DỮ LIỆU" : @"GOFA";
+    if(test) { speed=test[@"speed"]; limit=test[@"limit"]; waiting=NO; }
+    self.titleLabel.text=test ? @"GOFA · TEST" : @"GOFA";
     self.speedLabel.text=speed ? speed.stringValue : @"--";
     self.limitLabel.text=limit ? limit.stringValue : @"--";
+    GOFAHUDWarningStyle(self,speed,limit);
     GVMWarning warning=GVMWarningFor(speed,limit);
     self.speedLabel.textColor=warning==GVMWarningOver ? UIColor.systemRedColor : warning==GVMWarningNear ? UIColor.systemYellowColor : UIColor.whiteColor;
-    NSDictionary *camera=active ? GOFAHUDCameraDecode(ReadState(cameraToken),now) : nil;
-    unsigned kind=[camera[@"kind"] unsignedIntValue];
-    NSArray *names=@[@"",@"CAM giao thông",@"CAM phạt",@"CAM đèn đỏ",@"CAM AI"];
-    self.cameraLabel.text=!active ? @"Mở GOFA trên iPhone" : camera && kind ? [NSString stringWithFormat:@"%@ · %@ m",names[kind],camera[@"meters"]] : @"Chờ cảnh báo GOFA";
+    GOFAHUDSetCamera(self,self.cameraLabel,test ? @150 : camera[@"meters"],cameraAvailable);
+
 }
 - (void)openGOFA:(UITapGestureRecognizer *)tap {
     if(tap.state!=UIGestureRecognizerStateRecognized) return;
@@ -180,6 +195,7 @@ static NSDictionary *ViewSummary(UIView *view) {
 }
 static void Diagnostics(void) {
     static double last=0; double now=NSProcessInfo.processInfo.systemUptime;
+    static int hostToken=-1,testToken=-1; if(hostToken<0) notify_register_check(GVM_BACKGROUND_SIGNAL,&hostToken); if(testToken<0) notify_register_check(GVMTestStateName,&testToken); if(hostToken>=0) notify_set_state(hostToken,(uint64_t)(now*1000)); NSDictionary *test=GVMDecodeTest(ReadState(testToken),now);
     if(now-last<5) return; last=now;
     NSMutableArray *windows=[NSMutableArray array],*scenes=[NSMutableArray array];
     for(UIScene *scene in UIApplication.sharedApplication.connectedScenes) [scenes addObject:@{@"class":NSStringFromClass(scene.class),@"activation":@(scene.activationState),@"role":scene.session.role ?: @""}];

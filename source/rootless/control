@@ -1,11 +1,11 @@
 Package: local.gofahud
-Name: GOFA HUD
-Version: 0.2.1
+Name: GOFA HUD (Rootless)
+Version: 0.3.1
 Architecture: iphoneos-arm64
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
-Depends: firmware (>= 15.0), mobilesubstrate, ldid
+Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
  Tương thích: Rootless (Dopamine), iOS 15 và 16.
  Cần GOFA 4.2.1; có log cài đặt và chẩn đoán.

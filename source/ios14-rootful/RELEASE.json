@@ -1,0 +1,8 @@
+{
+  "profile": "ios14-rootful",
+  "version": "0.2.1-2",
+  "deb": "local.gofahud_0.2.1-2_iphoneos-arm.deb",
+  "deb_sha256": "1f12a40276ce26a01400f2e8d041096a1f985124db5fa9bf50603f60f1495330",
+  "source_origin": "GOFAHUD-source-ios14",
+  "notes": "Source files and release installer/layout. Toolchain and RootHide transformation affect binary output; no claim of bit-identical rebuild."
+}

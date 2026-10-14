@@ -1,0 +1,8 @@
+{
+  "profile": "roothide",
+  "version": "0.2.1",
+  "deb": "local.gofahud_0.2.1_iphoneos-arm64e.deb",
+  "deb_sha256": "f54173126ef8b099a91f14da8f7a234449a9865e26e3e0528d57b3aded1d8a7d",
+  "source_origin": "GOFAHUD-source-0.2.0",
+  "notes": "Source files and release installer/layout. Toolchain and RootHide transformation affect binary output; no claim of bit-identical rebuild."
+}

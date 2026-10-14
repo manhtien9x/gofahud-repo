@@ -1,0 +1,8 @@
+{
+  "profile": "rootless",
+  "version": "0.2.1",
+  "deb": "local.gofahud_0.2.1_iphoneos-arm64.deb",
+  "deb_sha256": "4347c34685f4a8f86995fdd5cc6a90910778ef45ef3afecb0dd87ef9afc520ad",
+  "source_origin": "GOFAHUD-source-0.2.0",
+  "notes": "Source files and release installer/layout. Toolchain and RootHide transformation affect binary output; no claim of bit-identical rebuild."
+}

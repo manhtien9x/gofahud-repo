@@ -1,22 +1,22 @@
 Package: local.gofahud
 Name: GOFA HUD
-Version: 0.2.0
+Version: 0.2.1~beta7
 Architecture: iphoneos-arm64
-Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
- Tương thích: Rootless (Dopamine).
- Phiên bản 0.2.0; dành cho Dopamine rootless.
- Cần cài riêng ứng dụng GOFA 4.2.1.
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), mobilesubstrate, ldid
+Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+ Tương thích: Rootless (Dopamine).
+ Phiên bản 0.2.1 beta7; gói chung cho Dopamine Rootless trên iOS 15 và 16.
+ Cần cài riêng ứng dụng GOFA 4.2.1.
 Tag: role::enduser
-Filename: local.gofahud_0.2.0_iphoneos-arm64.deb
-Size: 146880
-MD5sum: d116c6c0b6491aaec43a2fc389be22bd
-SHA1: 74e59e7bb500d403360285db20851e36f43b406f
-SHA256: 1ff297895684665a60714d7bcfd4ea28a8a28045dd8e361d6349ffabddf67862
-SHA512: 4548acb90be211e2b5897dd5edea24538540cccc3e148e4cca0cb4be740732f98997b4f3825a7377e3bf41cb6fcb3e270a59b2b376a426a92ccf55fc516699fe
+Filename: local.gofahud_0.2.1~beta7_iphoneos-arm64.deb
+Size: 247348
+MD5sum: 64343fb201c67058b66faddc42ce24d1
+SHA1: cad6b4d4b6f7a319cf44e3dfaa1a34988cedb561
+SHA256: 17dccae1bc46bc60a3b38b846c7a26e593eaefe8db21f7621d21e5f6fcef1e44
+SHA512: 033aea0ce1c20435fce31c6736cff5ebf9e854e3cd65e766b639a8a40e46306adcbb773a8cb74670d663cec45696cd22a20c2ca9e6cdc52ae3960dab3fdf47bf
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-rootless.html
 
 Package: local.gofahud

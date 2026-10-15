@@ -1,73 +1,9 @@
 {
-  "file": "local.gofahud_0.3.1_iphoneos-arm64e.deb",
-  "bytes": 1298522,
-  "sha256": "73b01c61d83e047d0e306ea4b3c6d7a3f0d6ff798a11a1bd8a9e339815f197ae",
-  "officialPatcherCommit": "80c16e08da33fecd27c0ff35777f37afd171868b",
-  "pageSignaturesVerified": true,
-  "physicalPathTrustcacheInstaller": true,
-  "autoPatchesSymlinks": 9,
-  "binaries": [
-    {
-      "path": "Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib",
-      "signatures": [
-        "2a66f95adae36cb4daf337a58325e249cba62ea4",
-        "721276cc22f6bfec6907ce2290a08edb770b7118"
-      ]
-    },
-    {
-      "path": "Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib",
-      "signatures": [
-        "c1a289a77a7c6d07adf1429295cf4a9d1eb0570d",
-        "95a7eac95cec41179bf01c219bc90b9f6146cd3b"
-      ]
-    },
-    {
-      "path": "Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib",
-      "signatures": [
-        "7c4924dd176b0679dc9b92964d5828fa81c55191",
-        "00fa73ec6f00f21fd205ef2e421a87617c2fcef2"
-      ]
-    },
-    {
-      "path": "Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib",
-      "signatures": [
-        "df7750cd9e95bf02d739b02355c390765786b84a",
-        "ed39482fd8afbe2a98062e38e5c696ac7a953301"
-      ]
-    },
-    {
-      "path": "Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib",
-      "signatures": [
-        "c7e4b3d14785575bbde57e80c244d867a3600aed",
-        "14b7d478602cd899eb93a9e74502aa4c94470941"
-      ]
-    },
-    {
-      "path": "Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib",
-      "signatures": [
-        "df676b1a92759bc1999bda2098200191eda12f49",
-        "3814506463d36f7f70051409563e796cd0b26dc3"
-      ]
-    },
-    {
-      "path": "Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs",
-      "signatures": [
-        "0d1b01f091fe1cbc82a3f99088cc2bfff6274d6c",
-        "92312db2061b08ee385aa0153d78882f53df19cc"
-      ]
-    },
-    {
-      "path": "usr/libexec/gofahud-tests/gofahud-native-speed-bridge",
-      "signatures": [
-        "6a9414a8634b5962ce5953179c2ecd8b8ed2a99f"
-      ]
-    },
-    {
-      "path": "usr/libexec/gofahud-tests/gofahud-test-speed",
-      "signatures": [
-        "221240772f31db3d1f8392f8d493536ba4705535"
-      ]
-    }
-  ],
-  "runtimeRetestRequired": true
+  "version": "0.3.1",
+  "profile": "roothide",
+  "runtimeStatus": "User confirmed working on the previously tested iOS targets",
+  "confirmedDate": "2026-10-15",
+  "confirmedIOSTargets": [
+    "16.7"
+  ]
 }

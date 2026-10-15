@@ -1,6 +1,6 @@
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.1
+Version: 0.3.1-1
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou

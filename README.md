@@ -17,12 +17,16 @@ Bong bóng cảnh báo GOFA trên iPhone và CarPlay.
 
 - [Rootless](./GOFAHUD-0.3.1-rootless.deb): iOS 15–16, Dopamine Rootless.
 - [RootHide](./GOFAHUD-0.3.1-roothide.deb): RootHide; cần rootless-compat từ 0.9.
-- [iOS 14 Rootful](./GOFAHUD-0.3.1-rootful.deb): Dành cho iOS 14 Rootful.
+- [iOS 14 Rootful](./GOFAHUD-0.3.1-1-rootful.deb): Dành cho iOS 14 Rootful.
 
 ## Cài đặt
 
 Thêm https://manhtien9x.github.io/gofahud-repo/ vào Sileo hoặc Zebra, cài đúng gói, Respring và mở GOFA. Cấp quyền vị trí Luôn luôn và Vị trí chính xác. Tùy chỉnh tại Cài đặt → GOFA HUD.
 
-Các gói mới iOS14.1/16.3/16.7 chưa kiểm thử lại thực tế; cảnh báo dân cư/cấm vượt thật cần đối chiếu. Không xác nhận iOS17/18.
+Đã kiểm thử thành công trên iOS 14.1, 15.8.8, 16.3 và 16.7 theo xác nhận của người dùng ngày 15/10/2026. Chọn đúng gói theo môi trường jailbreak; cần GOFA 4.2.1. Không xác nhận iOS17/18.
 
 Mã tích hợp từ GMapHUD của chou theo giấy phép MIT được ghi trong source/upstream.
+
+## Rootful 0.3.1-1
+
+Sửa cầu nối gọi nhầm jbctl của Dopamine trên Taurine Rootful. Giữ các tính năng giao diện và xuất TXT. Rootless/RootHide giữ bản 0.3.1 đã kiểm thử.

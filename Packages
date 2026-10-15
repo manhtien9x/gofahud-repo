@@ -13,6 +13,7 @@ Description: Bong bóng GOFA trên iPhone và CarPlay.
  Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
  Xuất TXT đầy đủ các log đọc được và CrashReporter.
  Cần GOFA 4.2.1.
+ Đã kiểm thử thành công trên các bản iOS tương ứng; cập nhật ngày 15/10/2026.
 Tag: role::enduser
 Filename: GOFAHUD-0.3.1-rootless.deb
 Size: 648224
@@ -37,6 +38,7 @@ Description: Bong bóng GOFA trên iPhone và CarPlay.
  Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
  Xuất TXT đầy đủ các log đọc được và CrashReporter.
  Cần GOFA 4.2.1.
+ Đã kiểm thử thành công trên các bản iOS tương ứng; cập nhật ngày 15/10/2026.
 Tag: role::enduser
 Pre-Depends: rootless-compat(>= 0.9)
 Filename: GOFAHUD-0.3.1-roothide.deb
@@ -49,7 +51,7 @@ SHA512: 5fca396029f3ab6173aed9d7879659fd03412b361e12ccd9b83a01a1e57db8f81d3ed856
 
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.1
+Version: 0.3.1-1
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -62,12 +64,13 @@ Description: Bong bóng GOFA trên iPhone và CarPlay.
  Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
  Xuất TXT đầy đủ các log đọc được và CrashReporter.
  Cần GOFA 4.2.1.
+ Đã kiểm thử thành công trên các bản iOS tương ứng; cập nhật ngày 15/10/2026.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.1-rootful.deb
-Size: 459978
+Filename: GOFAHUD-0.3.1-1-rootful.deb
+Size: 459720
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-ios14.html
-MD5sum: 0f7b59fcbe2ab65a52df3cd82653104e
-SHA1: cdf5bf0ab35b58fccf17297842da1e05c21ca97f
-SHA256: 7a7247e5a332b59277d1beb373ff205234129514650cc080f44fb8ab1daa6a4b
-SHA512: 4e8033c2dbc605ed77d66db640de2d9ab0355a3f5dee0d26ce8deaa06d1093bb6bb6b1c5180dc7af3ed41240547924456bca2d202a4e6831347de853a5939cc3
+MD5sum: 41e2d6692c5b6eed8ea9965c7058c83d
+SHA1: 2f085f3182736b056fe1a345b3dedeb17003194c
+SHA256: 48e7e20f051a5b316795d2b0f64a541789437286c10f599281aadc1205876b85
+SHA512: d95c15a02e428038ad9a086e18cd92e28d0cacad214da16ec676f955dc3a6d520c3334fe1c80cb6f46574fb3a4e5147f0695b8b841fda0ff50be972bf16db0d8
 

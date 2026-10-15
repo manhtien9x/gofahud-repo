@@ -4,7 +4,7 @@ export TZ=Asia/Ho_Chi_Minh
 mkdir -p /var/mobile/Library/Logs
 log=/var/mobile/Library/Logs/GofaHUD-install.log
 stamp() { date '+%Y-%m-%dT%H:%M:%S%z'; }
-printf '%s script=%s action=%s version=0.3.1 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log"
+printf '%s script=%s action=%s version=0.3.1-1 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log"
 trap 'result=$?; printf "%s script=%s exit=%s\n" "$(stamp)" "$0" "$result" >> "$log"' EXIT
 case "${1:-}" in remove|upgrade|deconfigure)
 for label in native-speed drive-recorder diagnostics; do

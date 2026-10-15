@@ -1,5 +1,9 @@
 {
-  "version": "0.3.1",
+  "version": "0.3.1-1",
   "profile": "ios14-rootful",
-  "runtimeStatus": "iOS 15.8.8 features verified; new iOS14/16 packages require on-device retest"
+  "runtimeStatus": "User confirmed working on the previously tested iOS targets",
+  "confirmedDate": "2026-10-15",
+  "confirmedIOSTargets": [
+    "14.1"
+  ]
 }

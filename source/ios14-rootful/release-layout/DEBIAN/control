@@ -1,12 +1,12 @@
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.2
+Version: 0.3.3
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 14.0), firmware (<< 15.0), org.coolstar.libhooker, preferenceloader
-Description: Bong bóng tốc độ và biển báo GOFA cho iPhone và CarPlay.
- Bản thử nghiệm iOS 14, Taurine Rootful, arm64. Yêu cầu GOFA 4.2.1.
- Chưa kiểm chứng hoạt động thực tế trên iOS 14; kèm nhật ký chẩn đoán.
+Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+ Tương thích: iOS 14 Rootful; GOFA 4.2.1.
+ Gửi logs: gom đầy đủ log đọc được và mở bảng chia sẻ file iOS.
 Tag: role::enduser

@@ -1,67 +1,64 @@
 Package: local.gofahud
 Name: GOFA HUD (Rootless)
-Version: 0.3.2
+Version: 0.3.3
 Architecture: iphoneos-arm64
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
- Tương thích: iOS 15–16, Dopamine Rootless.
- Hỗ trợ GOFA 4.2.1 và 4.2.2.
- Bố cục, kích cỡ, cảnh báo tự co giãn và xuất TXT đầy đủ.
- Bản 0.3.2 cập nhật cấu hình nguồn GOFA; giữ tương thích bản cũ.
+ Tương thích: iOS 15–16, Dopamine Rootless. GOFA 4.2.1 và 4.2.2.
+ Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
+ Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.2-rootless.deb
-Size: 651838
+Filename: GOFAHUD-0.3.3-rootless.deb
+Size: 648992
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-rootless.html
-MD5sum: 503316628de084047bbed2ce31aecca2
-SHA1: c75503e0d9dc28ee636646fd5f7b1d67fd4378d3
-SHA256: 40ca1365d8fe30397a3fd4d01b3bb46cbdf1c0757f467da1254e95b357f9f6e6
-SHA512: ee1183cd5c1a68d37de0787d746f98d32b0b6b609bb035fe3335c8711f34a40deee223711f8600f42527ebb24d367d35299fa661c84f1e05009c27f088886d3f
+MD5sum: 087ab8d02409d0dc4a8d1d9b9758c045
+SHA1: e1de3201b725cb12daeb52cc3c980d5d237a2cab
+SHA256: 4dd3d7f1b1432c9b74ca06056bb009c7c00e65056943ee5ab45d223a4733411c
+SHA512: fe207ffc1667c3027555bff55ce2e85ee3d81bafde6d4464ce03724160ad89e1a1882e9f154c4b09dcd312da243c3ce6c0afc29a4d815094a1c507c43af97f45
 
 Package: local.gofahud
 Name: GOFA HUD (RootHide)
-Version: 0.3.2
+Version: 0.3.3
 Architecture: iphoneos-arm64e
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
- Tương thích: RootHide; cần rootless-compat từ 0.9.
- Hỗ trợ GOFA 4.2.1 và 4.2.2.
- Bố cục, kích cỡ, cảnh báo tự co giãn và xuất TXT đầy đủ.
- Bản 0.3.2 cập nhật cấu hình nguồn GOFA; giữ tương thích bản cũ.
+ Tương thích: RootHide; cần rootless-compat từ 0.9. GOFA 4.2.1 và 4.2.2.
+ Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
+ Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
 Tag: role::enduser
 Pre-Depends: rootless-compat(>= 0.9)
-Filename: GOFAHUD-0.3.2-roothide.deb
-Size: 1306220
+Filename: GOFAHUD-0.3.3-roothide.deb
+Size: 1299766
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-roothide.html
-MD5sum: b79ed00a54f99562fb56480186015847
-SHA1: ac074bd5d8387a8ee5ce23f0193c15dcc6b6b388
-SHA256: eb4c17e7a152e8fba0ae31608f0303edd4b04e899f545330751a9e4e2cf10df1
-SHA512: ddbb02e6ad70ec118fab15127175f6663747cf6598e71e85d9a2f63daf77d991675ef75323f9a7b95a09ebe9b54d2cb7eda0b2fe075e8529809e144980c56680
+MD5sum: 00895c65d0917f746d3d1752574f0a57
+SHA1: 0749654021bcdd58047a835151b9ccc1dff12dfa
+SHA256: 9e8a38f33fe9b4463803918d463807a22023f54af397307c7f07ea73f27cbcb0
+SHA512: 547cad4adfebd9733400674b6d77e300990c861e14e9080149e2b9190e9cffd528a04d82633eaf33161245bc33698833bb691cb7e8d19fdc79a928b20a343aa4
 
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.2
+Version: 0.3.3
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 14.0), firmware (<< 15.0), org.coolstar.libhooker, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
- Tương thích: Dành cho iOS 14 Rootful.
- Cần GOFA 4.2.1 trên iOS 14.
- Bố cục, kích cỡ, cảnh báo tự co giãn và xuất TXT đầy đủ.
- Bản 0.3.2 cập nhật cấu hình nguồn GOFA; giữ tương thích bản cũ.
+ Tương thích: Dành cho iOS 14 Rootful. GOFA 4.2.1 trên iOS 14.
+ Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
+ Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.2-rootful.deb
-Size: 461172
+Filename: GOFAHUD-0.3.3-rootful.deb
+Size: 459952
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-ios14.html
-MD5sum: 764e2bcb403c75f0671cec304db257ad
-SHA1: 764adf1cfa18b589c808c87112afb65cd7e50d39
-SHA256: 0eb31ae8c0b13c7c8a1c30565ebad4c186306f779fe651eace2a6b2ff56e923c
-SHA512: c8ea04edd38852c548a2a085cf430e60d0a93b8af057ab8f0f8f3f4cf3111fd62fa9cd24e256ec90f7baa8e5bb9c76017bed68d3020c9d9b2abdc815a4137f44
+MD5sum: 1be2d0cdd8c020e6ad33e561a524f8ba
+SHA1: d5f8917f52ce2062ee1fd9431c35b8ff48386949
+SHA256: d72c8489bb833c5649b6186c004192748c2459ee3890a89694bc0b42939aa9bc
+SHA512: 998f7799fb031ab9eeab84889c7ee9e007e585fe6d085de729937e823ec1f3c6f99bf8014be8b8ba6de1c6365a34210466f96ffa087142d41255e019d100c5b0
 

@@ -5,7 +5,7 @@ mkdir -p "$log_dir"
 log_file="$log_dir/GofaHUD-install.log"
 touch "$log_file"; chmod 0644 "$log_file"
 stamp() { TZ=Asia/Ho_Chi_Minh date '+%Y-%m-%dT%H:%M:%S%z'; }
-printf '%s script=%s action=%s version=0.3.2 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log_file"
+printf '%s script=%s action=%s version=0.3.3 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log_file"
 trap 'result=$?; printf "%s script=%s exit=%s\n" "$(stamp)" "$0" "$result" >> "$log_file"' EXIT
 run_output=$(/var/jb/bin/sh -s -- "$@" 2>&1 <<'GOFAHUD_SCRIPT_BODY'
 export PATH=/var/jb/usr/bin:/var/jb/bin:/usr/bin:/bin:/usr/sbin:/sbin

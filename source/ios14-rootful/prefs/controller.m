@@ -15,6 +15,7 @@
 + (instancetype)preferenceSpecifierNamed:(NSString *)name target:(id)target set:(SEL)set get:(SEL)get detail:(Class)detail cell:(NSInteger)cell edit:(Class)edit;
 - (void)setProperty:(id)value forKey:(NSString *)key;
 - (id)propertyForKey:(NSString *)key;
+- (void)setButtonAction:(SEL)action;
 @end
 @interface PSListController : UIViewController
 @property(nonatomic,strong) PSSpecifier *specifier;
@@ -341,39 +342,13 @@ static PSSpecifier *GOFAChoice(NSString *title,id target,NSString *key,NSArray *
 @end
 
 
-@interface GOFADiagnosticsController : PSListController
-@property(nonatomic,strong) UITextView *report;
-@end
-@implementation GOFADiagnosticsController
-- (NSArray *)specifiers { NSArray *items=@[]; Ivar storage=class_getInstanceVariable(PSListController.class,"_specifiers"); if(storage && !object_getIvar(self,storage)) object_setIvar(self,storage,items); return items; }
-- (void)viewDidLoad {
- [super viewDidLoad];
- self.title=@"Chẩn đoán / Xuất log"; self.report=[UITextView new]; self.report.editable=NO; self.report.font=[UIFont monospacedSystemFontOfSize:12 weight:UIFontWeightRegular]; self.report.backgroundColor=UIColor.systemBackgroundColor; self.report.translatesAutoresizingMaskIntoConstraints=NO; [self.view addSubview:self.report]; [NSLayoutConstraint activateConstraints:@[[self.report.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],[self.report.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],[self.report.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],[self.report.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]]];
- self.navigationItem.rightBarButtonItems=@[[[UIBarButtonItem alloc] initWithTitle:@"Xuất" style:UIBarButtonItemStylePlain target:self action:@selector(exportReport)],[[UIBarButtonItem alloc] initWithTitle:@"Sao chép" style:UIBarButtonItemStylePlain target:self action:@selector(copyReport)],[[UIBarButtonItem alloc] initWithTitle:@"Làm mới" style:UIBarButtonItemStylePlain target:self action:@selector(refreshReport)]];
- [self refreshReport];
-}
-- (void)refreshReport {
- NSMutableString *text=[NSMutableString stringWithFormat:@"GOFA HUD — Báo cáo chẩn đoán\nThời gian: %@\niOS: %@\n\n",NSDate.date,UIDevice.currentDevice.systemVersion];
+static NSString *GOFAHUDLogsSummary(void) {
+ NSMutableString *text=[NSMutableString stringWithFormat:@"GOFA HUD — Báo cáo chẩn đoán\nThời gian: %@\niOS: %@\n\n",NSDate.date,NSProcessInfo.processInfo.operatingSystemVersionString];
  for(NSString *name in @[@"local.gofahud.source.ready",@"local.gofahud.gofa.foreground",@"local.gofahud.carplay.enabled",@"local.gofahud.carplay.gofa-active"]) { int token=-1; uint64_t value=0; if(notify_register_check(name.UTF8String,&token)==NOTIFY_STATUS_OK) { notify_get_state(token,&value); notify_cancel(token); } [text appendFormat:@"%@: %llu\n",name,(unsigned long long)value]; }
  NSString *dir=@"/var/mobile/Library/Logs";
  for(NSString *name in @[@"GofaHUD-phone.log",@"GofaHUD-launch.log",@"GofaHUD-background.log",@"GofaHUD-carplay-open-result.json",@"GofaHUD-native-bridge.log"]) { NSString *path=[dir stringByAppendingPathComponent:name]; NSData *data=[NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:nil]; if(data.length>32768) data=[data subdataWithRange:NSMakeRange(data.length-32768,32768)]; NSString *log=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; [text appendFormat:@"\n--- %@ ---\n%@\n",name,log ?: @"Chưa có log đọc được"]; }
- self.report.text=text;
+ return text;
 }
-- (void)copyReport { UIPasteboard.generalPasteboard.string=self.report.text; }
-- (void)exportReport {
- if(self.presentedViewController) return;
- [self refreshReport]; NSString *summary=self.report.text;
- for(UIBarButtonItem *button in self.navigationItem.rightBarButtonItems) button.enabled=NO;
- dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY,0),^{
-  NSError *error=nil; NSURL *file=GOFAHUDFullLogExport(summary,&error);
-  dispatch_async(dispatch_get_main_queue(),^{
-   for(UIBarButtonItem *button in self.navigationItem.rightBarButtonItems) button.enabled=YES;
-   if(!file) { UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Không thể xuất log" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert]; [alert addAction:[UIAlertAction actionWithTitle:@"Đóng" style:UIAlertActionStyleCancel handler:nil]]; [self presentViewController:alert animated:YES completion:nil]; return; }
-   UIActivityViewController *share=[[UIActivityViewController alloc] initWithActivityItems:@[file] applicationActivities:nil]; share.popoverPresentationController.barButtonItem=self.navigationItem.rightBarButtonItems.firstObject; [self presentViewController:share animated:YES completion:nil];
-  });
- });
-}
-@end
 @interface GOFATestCell : PSTableCell
 @end
 @implementation GOFATestCell
@@ -389,8 +364,39 @@ static PSSpecifier *GOFAChoice(NSString *title,id target,NSString *key,NSArray *
 @end
 @interface GOFAHUDPrefsController : GOFAHUDBaseController
 @property(nonatomic,strong) NSArray *items;
+@property(nonatomic) BOOL preparingLogs;
 @end
 @implementation GOFAHUDPrefsController
+- (void)sendLogs {
+ if(self.preparingLogs || self.presentedViewController) return;
+ self.preparingLogs=YES;
+ UIAlertController *progress=[UIAlertController alertControllerWithTitle:@"Đang gom logs…" message:@"Đợi một chút để tạo file. Bảng chia sẻ của iOS sẽ tự mở khi hoàn tất." preferredStyle:UIAlertControllerStyleAlert];
+ [self presentViewController:progress animated:YES completion:^{
+  dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY,0),^{
+   NSError *error=nil;
+   NSURL *file=GOFAHUDFullLogExport(GOFAHUDLogsSummary(),&error);
+   dispatch_async(dispatch_get_main_queue(),^{
+    [progress dismissViewControllerAnimated:YES completion:^{
+     self.preparingLogs=NO;
+     if(!file) {
+      UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Không thể tạo file logs" message:error.localizedDescription ?: @"Không đọc được log hoặc máy không đủ dung lượng trống." preferredStyle:UIAlertControllerStyleAlert];
+      [alert addAction:[UIAlertAction actionWithTitle:@"Đóng" style:UIAlertActionStyleCancel handler:nil]];
+      [self presentViewController:alert animated:YES completion:nil]; return;
+     }
+     UIActivityViewController *share=[[UIActivityViewController alloc] initWithActivityItems:@[file] applicationActivities:nil];
+     UIPopoverPresentationController *popover=share.popoverPresentationController;
+     if(popover) {
+      popover.sourceView=self.view;
+      popover.sourceRect=CGRectMake(CGRectGetMidX(self.view.bounds),CGRectGetMidY(self.view.bounds),1,1);
+      popover.permittedArrowDirections=0;
+     }
+     [self presentViewController:share animated:YES completion:nil];
+    }];
+   });
+  });
+ }];
+}
+
 - (NSArray *)specifiers {
  if(self.items) return self.items;
  self.title=@"GOFA HUD";
@@ -411,7 +417,7 @@ static PSSpecifier *GOFAChoice(NSString *title,id target,NSString *key,NSArray *
  }
  PSSpecifier *help=[PSSpecifier groupSpecifierWithName:@"Sử dụng"];
  [help setProperty:@"Kéo bong bóng để đổi vị trí. Chạm một lần để mở GOFA. Kéo vào dấu X để tắt; mở lại GOFA rồi chuyển ứng dụng để hiện lại." forKey:@"footerText"]; [items addObject:help];
- [items addObject:[PSSpecifier groupSpecifierWithName:@"Hỗ trợ"]]; [items addObject:[PSSpecifier preferenceSpecifierNamed:@"Chẩn đoán / Xuất log" target:self set:NULL get:NULL detail:GOFADiagnosticsController.class cell:1 edit:Nil]];
+ [items addObject:[PSSpecifier groupSpecifierWithName:@"Hỗ trợ"]]; PSSpecifier *send=[PSSpecifier preferenceSpecifierNamed:@"Gửi logs" target:self set:NULL get:NULL detail:Nil cell:13 edit:Nil]; [send setButtonAction:@selector(sendLogs)]; [items addObject:send]; PSSpecifier *sendNote=[PSSpecifier groupSpecifierWithName:@""]; [sendNote setProperty:@"Gom đầy đủ log đọc được rồi mở bảng chia sẻ file của iOS. Bạn chọn ứng dụng và người nhận; tweak không tự gửi log." forKey:@"footerText"]; [items addObject:sendNote];
  PSSpecifier *test=[PSSpecifier preferenceSpecifierNamed:@"Thử hiển thị" target:self set:NULL get:NULL detail:Nil cell:4 edit:Nil]; [test setProperty:GOFATestCell.class forKey:@"cellClass"]; [test setProperty:@YES forKey:@"enabled"]; [test setProperty:@52 forKey:@"height"]; [items addObject:test]; PSSpecifier *testNote=[PSSpecifier groupSpecifierWithName:@""]; [testNote setProperty:@"Dữ liệu thử có nhãn TEST và tự tắt sau 60 giây. Chỉ dùng thử khi xe đang đỗ." forKey:@"footerText"]; [items addObject:testNote];
  self.items=items; Ivar storage=class_getInstanceVariable(PSListController.class,"_specifiers"); if(storage) object_setIvar(self,storage,items); return items;
 }

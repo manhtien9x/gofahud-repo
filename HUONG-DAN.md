@@ -33,9 +33,9 @@ Trong Cài đặt GOFA HUD, bạn có thể bật các tùy chọn tự mở GOF
 
 Các nút **42/50, 48/50, 62/50** trong Cài đặt dùng dữ liệu minh họa để xem bố cục và cảnh báo. Khi thử, bong bóng có nhãn **TEST**, tự kết thúc sau 60 giây; bấm **Tắt thử** để quay lại dữ liệu thật ngay. Có thể bật viền cảnh báo trên bong bóng hoặc màn hình trong phần tùy chỉnh vượt tốc độ.
 
-### 6. Xuất log khi cần kiểm tra lỗi
+### 6. Gửi logs khi cần kiểm tra lỗi
 
-Sau khi gặp lỗi, vào **Cài đặt → GOFA HUD → Chẩn đoán / Xuất log → Xuất**. Đợi gom dữ liệu, chọn **Lưu vào Tệp** rồi lưu file **GOFAHUD-full-logs-….txt** vào Tải về. Gửi file TXT này kèm mô tả lỗi và thời điểm xảy ra.
+Sau khi gặp lỗi, vào **Cài đặt → GOFA HUD → Gửi logs**. Đợi gom dữ liệu; bảng chia sẻ iOS sẽ tự mở với file **GOFAHUD-full-logs-….txt**. Chọn ứng dụng để gửi hoặc **Lưu vào Tệp** để giữ bản sao. Kèm mô tả lỗi và thời điểm xảy ra khi gửi.
 
 File TXT gom nội dung các tệp đọc được trong Logs, CrashReporter và log GOFA, kèm đường dẫn, SHA-256, thời gian bắt đầu/kết thúc xuất và danh sách tệp không đọc được hoặc thay đổi trong lúc gom. Dữ liệu nhị phân được lưu dạng Base64. Chức năng không tự tải log lên mạng; file có thể chứa thông tin thiết bị và vị trí, hãy gửi riêng khi nhờ kiểm tra.
 

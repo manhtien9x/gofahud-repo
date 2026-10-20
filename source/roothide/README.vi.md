@@ -1,4 +1,4 @@
-# GOFA HUD — source 0.3.2 (roothide)
+# GOFA HUD — source 0.3.3 (roothide)
 ## Bản sửa GOFA 4.2.2
 
 0.3.2 bổ sung profile dữ liệu GOFA 4.2.2 build 3 và giữ hỗ trợ 4.2.1. Xem [GOFA-4.2.2.md](GOFA-4.2.2.md) để biết thay đổi và phạm vi kiểm thử mới. Đã xác nhận tốc độ/giới hạn khi chạy nền trên iOS 15.8.8 ngày 20/10/2026; arm64e mới biên dịch, cần kiểm thử lại trên máy. Camera thực tế và CarPlay với GOFA 4.2.2 chưa kiểm chứng.
@@ -47,3 +47,9 @@ Giữ LICENSE MIT của GMapHUD. Nguồn nền: https://github.com/bechou0410/gm
 Rootless/RootHide: GOFA 4.2.1 hoặc 4.2.2. iOS 14 Rootful: GOFA 4.2.1, vì GOFA 4.2.2 yêu cầu iOS 15 trở lên.
 
 Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+
+## Gửi logs — 0.3.3
+
+Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
+
+Nút Gửi logs của bản 0.3.3 đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.

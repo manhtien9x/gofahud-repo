@@ -1,4 +1,4 @@
-# GOFA HUD 0.3.2
+# GOFA HUD 0.3.3
 
 Bong bóng cảnh báo GOFA trên iPhone và CarPlay.
 
@@ -11,13 +11,13 @@ Bong bóng cảnh báo GOFA trên iPhone và CarPlay.
 - **Kéo để di chuyển hoặc tắt:** Kéo đổi vị trí. Kéo vào dấu X để tắt; mở lại GOFA rồi chuyển ứng dụng để bong bóng hiện lại.
 - **Cảnh báo vượt tốc độ:** Màu tốc độ đổi khi gần/vượt giới hạn. Có tùy chọn viền cảnh báo trên bong bóng hoặc màn hình.
 - **Tự động hóa:** Tùy chọn tự mở GOFA và tự thoát sau 20 giây ngắt CarPlay; kết nối lại sẽ hủy đếm giờ.
-- **Chẩn đoán và xuất TXT:** Xuất nguyên nội dung các tệp đọc được trong Logs, CrashReporter và log GOFA vào một TXT. Có SHA-256, thời gian và danh sách phần thiếu; không tự tải lên mạng.
+- **Gửi logs qua ứng dụng:** Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
 
 ## Các gói
 
-- [Rootless](./GOFAHUD-0.3.2-rootless.deb): iOS 15–16, Dopamine Rootless.
-- [RootHide](./GOFAHUD-0.3.2-roothide.deb): RootHide; cần rootless-compat từ 0.9.
-- [iOS 14 Rootful](./GOFAHUD-0.3.2-rootful.deb): Dành cho iOS 14 Rootful.
+- [Rootless](./GOFAHUD-0.3.3-rootless.deb): iOS 15–16, Dopamine Rootless.
+- [RootHide](./GOFAHUD-0.3.3-roothide.deb): RootHide; cần rootless-compat từ 0.9.
+- [iOS 14 Rootful](./GOFAHUD-0.3.3-rootful.deb): Dành cho iOS 14 Rootful.
 
 ## Hướng dẫn sử dụng
 
@@ -54,9 +54,9 @@ Trong Cài đặt GOFA HUD, bạn có thể bật các tùy chọn tự mở GOF
 
 Các nút **42/50, 48/50, 62/50** trong Cài đặt dùng dữ liệu minh họa để xem bố cục và cảnh báo. Khi thử, bong bóng có nhãn **TEST**, tự kết thúc sau 60 giây; bấm **Tắt thử** để quay lại dữ liệu thật ngay. Có thể bật viền cảnh báo trên bong bóng hoặc màn hình trong phần tùy chỉnh vượt tốc độ.
 
-### 6. Xuất log khi cần kiểm tra lỗi
+### 6. Gửi logs khi cần kiểm tra lỗi
 
-Sau khi gặp lỗi, vào **Cài đặt → GOFA HUD → Chẩn đoán / Xuất log → Xuất**. Đợi gom dữ liệu, chọn **Lưu vào Tệp** rồi lưu file **GOFAHUD-full-logs-….txt** vào Tải về. Gửi file TXT này kèm mô tả lỗi và thời điểm xảy ra.
+Sau khi gặp lỗi, vào **Cài đặt → GOFA HUD → Gửi logs**. Đợi gom dữ liệu; bảng chia sẻ iOS sẽ tự mở với file **GOFAHUD-full-logs-….txt**. Chọn ứng dụng để gửi hoặc **Lưu vào Tệp** để giữ bản sao. Kèm mô tả lỗi và thời điểm xảy ra khi gửi.
 
 File TXT gom nội dung các tệp đọc được trong Logs, CrashReporter và log GOFA, kèm đường dẫn, SHA-256, thời gian bắt đầu/kết thúc xuất và danh sách tệp không đọc được hoặc thay đổi trong lúc gom. Dữ liệu nhị phân được lưu dạng Base64. Chức năng không tự tải log lên mạng; file có thể chứa thông tin thiết bị và vị trí, hãy gửi riêng khi nhờ kiểm tra.
 
@@ -67,16 +67,18 @@ File TXT gom nội dung các tệp đọc được trong Logs, CrashReporter và
 - Nếu thiếu tốc độ hoặc biển báo, kiểm tra dữ liệu trong GOFA trước, quyền vị trí Luôn luôn và Vị trí chính xác. Mở GOFA để nhận dữ liệu rồi chuyển app; không bật chế độ TEST khi đối chiếu dữ liệu thật.
 - Nếu vẫn lỗi, xuất TXT ngay sau khi thử lại và gửi kèm phiên bản iOS, GOFA, GOFA HUD cùng môi trường jailbreak.
 
-Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+Bản 0.3.3 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
 
 Rootless/RootHide: GOFA 4.2.1 hoặc 4.2.2. iOS 14 Rootful: GOFA 4.2.1, vì GOFA 4.2.2 yêu cầu iOS 15 trở lên. Không xác nhận iOS17/18.
 
 Mã tích hợp từ GMapHUD của chou theo giấy phép MIT được ghi trong source/upstream.
 
-## Thay đổi trong 0.3.2
+## Thay đổi trong 0.3.3
 
-Sửa mất dữ liệu khi GOFA cập nhật lên 4.2.2. Thêm profile version/UUID riêng và bắt nguồn HUD sau init gốc, giữ hỗ trợ 4.2.1. Giữ bản sửa cầu nối Taurine và các loại trừ Swift trên iOS 14.
+Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
 
-Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+Giữ bản sửa GOFA 4.2.2 và cấu hình riêng cho từng môi trường jailbreak.
+
+Nút Gửi logs của bản 0.3.3 đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
 
 Rootless/RootHide: GOFA 4.2.1 hoặc 4.2.2. iOS 14 Rootful: GOFA 4.2.1, vì GOFA 4.2.2 yêu cầu iOS 15 trở lên.

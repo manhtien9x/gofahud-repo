@@ -21,12 +21,18 @@ static BOOL HUDSpeedChanged;
 static void Publish(int token,const char *name,uint64_t value) { if(token>=0 && notify_set_state(token,value)==NOTIFY_STATUS_OK) notify_post(name); }
 static __weak id owner;
 static id (*originalInit)(id,SEL,id,dispatch_queue_t,NSDictionary *);
+static id (*originalManagerInit)(id,SEL);
 static dispatch_source_t timer;
 static void (*originalActive)(id,SEL);
 static void (*originalSign)(id,SEL,NSNotification *);
 static void (*originalSound)(id,SEL,NSNotification *);
 static NSDictionary *lastNotification;
 static void Capture(id value) { if([NSStringFromClass(object_getClass(value)) isEqual:@"GOFA.BleManager"]) owner=value; }
+static id ManagerInit(id self,SEL cmd) {
+    id result=originalManagerInit(self,cmd);
+    Capture(result);
+    return result;
+}
 static void RecordNotification(NSString *handler,NSNotification *n) {
     NSMutableDictionary *types=[NSMutableDictionary dictionary],*scalars=[NSMutableDictionary dictionary];
     for(id key in n.userInfo) if([key isKindOfClass:NSString.class]) {
@@ -134,6 +140,12 @@ __attribute__((constructor)) static void Start(void) {
     if(hook) hook(CBCentralManager.class,@selector(initWithDelegate:queue:options:),(IMP)Init,(IMP *)&originalInit);
     Class cls=NSClassFromString(@"GOFA.BleManager");
     if(hook && cls) {
+        SEL init=@selector(init);
+        Method initializer=class_getInstanceMethod(cls,init);
+        char returnType[8]={0};
+        if(initializer) method_getReturnType(initializer,returnType,sizeof(returnType));
+        if(initializer && method_getNumberOfArguments(initializer)==2 && returnType[0]=='@')
+            hook(cls,init,(IMP)ManagerInit,(IMP *)&originalManagerInit);
         SEL active=NSSelectorFromString(@"appDidBecomeActive"),sign=NSSelectorFromString(@"bindSignGosafeWithNotification:"),sound=NSSelectorFromString(@"bindSoundGosafeWithNotification:");
         Method m=class_getInstanceMethod(cls,active);
         if(m && method_getNumberOfArguments(m)==2) hook(cls,active,(IMP)Active,(IMP *)&originalActive);

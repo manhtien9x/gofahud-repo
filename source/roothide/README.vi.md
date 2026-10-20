@@ -1,4 +1,4 @@
-# GOFA HUD — source 0.3.3 (roothide)
+# GOFA HUD — source 0.3.3-1 (roothide)
 ## Bản sửa GOFA 4.2.2
 
 0.3.2 bổ sung profile dữ liệu GOFA 4.2.2 build 3 và giữ hỗ trợ 4.2.1. Xem [GOFA-4.2.2.md](GOFA-4.2.2.md) để biết thay đổi và phạm vi kiểm thử mới. Đã xác nhận tốc độ/giới hạn khi chạy nền trên iOS 15.8.8 ngày 20/10/2026; arm64e mới biên dịch, cần kiểm thử lại trên máy. Camera thực tế và CarPlay với GOFA 4.2.2 chưa kiểm chứng.
@@ -53,3 +53,9 @@ Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2
 Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
 
 Nút Gửi logs của bản 0.3.3 đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+
+## Gửi logs — 0.3.3-1
+
+Thêm nhãn Test hiển thị bong bóng phía trên các nút thử; phần giải thích đặt sát dưới ô cài đặt và thu gọn khoảng cách giữa các mục. Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
+
+Chức năng Gửi logs đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.

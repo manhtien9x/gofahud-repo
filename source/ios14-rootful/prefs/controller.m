@@ -19,6 +19,7 @@
 @end
 @interface PSListController : UIViewController
 @property(nonatomic,strong) PSSpecifier *specifier;
+- (NSArray *)specifiers;
 @end
 @interface PSTableCell : UITableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)identifier specifier:(PSSpecifier *)specifier;
@@ -38,7 +39,7 @@ static NSString *const GOFAPreferencesValueChanged=@"GOFAPreferencesValueChanged
     NSArray *values=[specifier propertyForKey:@"values"];
     CFPreferencesAppSynchronize(CFSTR("local.gofahud"));
     id saved=CFBridgingRelease(CFPreferencesCopyAppValue((__bridge CFStringRef)[specifier propertyForKey:@"key"],CFSTR("local.gofahud")));
-    NSUInteger index=[values indexOfObject:saved ?: [specifier propertyForKey:@"default"]];
+    NSUInteger index=[values indexOfObject:saved?: [specifier propertyForKey:@"default"]];
     self.picker.selectedSegmentIndex=index==NSNotFound ? 0 : (NSInteger)index;
     [self.picker addTarget:self action:@selector(changed:) forControlEvents:UIControlEventValueChanged];
     [self.picker.heightAnchor constraintGreaterThanOrEqualToConstant:44].active=YES;
@@ -301,11 +302,52 @@ static NSArray<NSString *> *GVMReadModuleOrder(NSString *key) {
 }
 @end
 
+// Keep each explanation attached to its actual section, without empty spacer groups.
+static PSSpecifier *GOFAHUDGroup(NSString *name) {
+ PSSpecifier *group=[PSSpecifier groupSpecifierWithName:name];
+ [group setProperty:@YES forKey:@"gofaGroup"];
+ return group;
+}
+static PSSpecifier *GOFAHUDGroupForSection(PSListController *controller,NSInteger section) {
+ NSInteger index=0;
+ for(PSSpecifier *item in [controller specifiers]) if([[item propertyForKey:@"gofaGroup"] boolValue]) {
+  if(index++==section) return item;
+ }
+ return nil;
+}
+static NSString *GOFAHUDFooterText(PSListController *controller,NSInteger section) {
+ id text=[GOFAHUDGroupForSection(controller,section) propertyForKey:@"footerText"];
+ return [text isKindOfClass:NSString.class] ? text : @"";
+}
 @interface GOFAHUDBaseController : PSListController
 - (id)readPreferenceValue:(PSSpecifier *)specifier;
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier;
 @end
 @implementation GOFAHUDBaseController
+- (CGFloat)tableView:(UITableView *)table heightForHeaderInSection:(NSInteger)section {
+ NSString *name=GOFAHUDGroupForSection(self,section).name;
+ return name.length ? ceil([UIFont preferredFontForTextStyle:UIFontTextStyleFootnote].lineHeight)+12 : (section==0 ? 8 : 10);
+}
+- (CGFloat)tableView:(UITableView *)table heightForFooterInSection:(NSInteger)section {
+ NSString *text=GOFAHUDFooterText(self,section);
+ if(!text.length) return CGFLOAT_MIN;
+ CGFloat width=MAX(1,CGRectGetWidth(table.bounds)-MAX(16,table.layoutMargins.left)-MAX(16,table.layoutMargins.right));
+ UIFont *font=[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+ CGRect rect=[text boundingRectWithSize:CGSizeMake(width,CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil];
+ return ceil(rect.size.height)+10;
+}
+- (UIView *)tableView:(UITableView *)table viewForFooterInSection:(NSInteger)section {
+ NSString *text=GOFAHUDFooterText(self,section);
+ if(!text.length) return nil;
+ UIView *footer=[UIView new];
+ UILabel *label=[UILabel new]; label.text=text; label.numberOfLines=0;
+ label.font=[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]; label.adjustsFontForContentSizeCategory=YES;
+ label.textColor=UIColor.secondaryLabelColor; label.translatesAutoresizingMaskIntoConstraints=NO;
+ [footer addSubview:label];
+ [NSLayoutConstraint activateConstraints:@[[label.topAnchor constraintEqualToAnchor:footer.topAnchor constant:4],[label.leadingAnchor constraintEqualToAnchor:footer.leadingAnchor constant:MAX(16,table.layoutMargins.left)],[label.trailingAnchor constraintEqualToAnchor:footer.trailingAnchor constant:-MAX(16,table.layoutMargins.right)],[label.bottomAnchor constraintEqualToAnchor:footer.bottomAnchor constant:-6]]];
+ return footer;
+}
+
 - (id)readPreferenceValue:(PSSpecifier *)specifier { CFPreferencesAppSynchronize(CFSTR("local.gofahud")); id value=CFBridgingRelease(CFPreferencesCopyAppValue((__bridge CFStringRef)[specifier propertyForKey:@"key"],CFSTR("local.gofahud"))); return value ?: [specifier propertyForKey:@"default"]; }
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier { CFPreferencesSetAppValue((__bridge CFStringRef)[specifier propertyForKey:@"key"],(__bridge CFPropertyListRef)value,CFSTR("local.gofahud")); if(CFPreferencesAppSynchronize(CFSTR("local.gofahud"))) { notify_post("local.gofahud.style.changed"); [NSNotificationCenter.defaultCenter postNotificationName:GOFAPreferencesValueChanged object:nil]; } }
 @end
@@ -322,9 +364,10 @@ static PSSpecifier *GOFAChoice(NSString *title,id target,NSString *key,NSArray *
     NSMutableArray *items=[NSMutableArray new];
     for (NSUInteger i=car ? 1 : 0;i<(car ? 2 : 1);i++) {
       NSString *prefix=i ? @"car" : @"phone";
-      PSSpecifier *group=[PSSpecifier groupSpecifierWithName:i ? @"Bong bóng trên CarPlay" : @"Bong bóng trên iPhone"];
+      PSSpecifier *group=GOFAHUDGroup(i ? @"Bong bóng trên CarPlay" : @"Bong bóng trên iPhone");
       [group setProperty:@"Thay đổi áp dụng ngay. Kéo bong bóng trực tiếp để đổi vị trí." forKey:@"footerText"]; [items addObject:group];
       [items addObject:GOFASwitch(@"Hiển thị bong bóng",self,[prefix stringByAppendingString:@"Enabled"])];
+      [items addObject:GOFAHUDGroup(@"")];
       [items addObject:GOFAChoice(@"Vị trí",self,[prefix stringByAppendingString:@"Position"],@[@"top-left",@"top-right",@"bottom-left",@"bottom-right"],@[@"Trên trái",@"Trên phải",@"Dưới trái",@"Dưới phải"],@"top-right")];
       PSSpecifier *preview=[PSSpecifier preferenceSpecifierNamed:@"Minh họa" target:self set:NULL get:NULL detail:Nil cell:4 edit:Nil];
       [preview setProperty:GOFAPreviewCell.class forKey:@"cellClass"]; [preview setProperty:@(i==1) forKey:@"car"]; [preview setProperty:@(car ? 200 : 250) forKey:@"height"]; [items addObject:preview];
@@ -333,9 +376,9 @@ static PSSpecifier *GOFAChoice(NSString *title,id target,NSString *key,NSArray *
       [layout setProperty:@[@"horizontal",@"vertical"] forKey:@"values"]; [layout setProperty:@[@"Ngang",@"Dọc"] forKey:@"titles"]; [layout setProperty:@"horizontal" forKey:@"default"];
       [layout setProperty:GOFASegmentedCell.class forKey:@"cellClass"]; [layout setProperty:@YES forKey:@"enabled"]; [layout setProperty:@110 forKey:@"height"]; [items addObject:layout];
       PSSpecifier *order=[PSSpecifier preferenceSpecifierNamed:@"Thứ tự các phần" target:self set:NULL get:NULL detail:Nil cell:4 edit:Nil]; [order setProperty:[prefix stringByAppendingString:@"Modules"] forKey:@"key"]; [order setProperty:GVMModuleOrderCell.class forKey:@"cellClass"]; [order setProperty:@YES forKey:@"enabled"]; [order setProperty:@400 forKey:@"height"]; [items addObject:order];
+      PSSpecifier *sizeGroup=GOFAHUDGroup(@""); [sizeGroup setProperty:@"100% là kích cỡ mặc định." forKey:@"footerText"]; [items addObject:sizeGroup];
       PSSpecifier *size=[PSSpecifier preferenceSpecifierNamed:@"Kích cỡ" target:self set:NULL get:NULL detail:Nil cell:4 edit:Nil];
       [size setProperty:[prefix stringByAppendingString:@"Size"] forKey:@"key"]; [size setProperty:GOFASizeSliderCell.class forKey:@"cellClass"]; [size setProperty:@YES forKey:@"enabled"]; [size setProperty:@160 forKey:@"height"]; [items addObject:size];
-      PSSpecifier *footer=[PSSpecifier groupSpecifierWithName:@""]; [footer setProperty:@"100% là kích cỡ mặc định." forKey:@"footerText"]; [items addObject:footer];
     }
     self.items=items; Ivar storage=class_getInstanceVariable(PSListController.class,"_specifiers"); if (storage) object_setIvar(self,storage,items); return self.items;
 }
@@ -401,24 +444,24 @@ static NSString *GOFAHUDLogsSummary(void) {
  if(self.items) return self.items;
  self.title=@"GOFA HUD";
  NSMutableArray *items=[NSMutableArray new];
- [items addObject:[PSSpecifier groupSpecifierWithName:@"Hiển thị"]]; [items addObject:GOFASwitch(@"Hiển thị bong bóng",self,@"bubbleEnabled")];
- [items addObject:[PSSpecifier groupSpecifierWithName:@"Tự động hóa"]];
+ [items addObject:GOFAHUDGroup(@"Hiển thị")]; [items addObject:GOFASwitch(@"Hiển thị bong bóng",self,@"bubbleEnabled")];
+ PSSpecifier *automationGroup=GOFAHUDGroup(@"Tự động hóa"); [automationGroup setProperty:@"Tự mở nguồn khi bong bóng hoạt động. Tự thoát sau 20 giây ngắt CarPlay; kết nối lại sẽ hủy đếm giờ." forKey:@"footerText"]; [items addObject:automationGroup];
  PSSpecifier *wake=GOFASwitch(@"Tự mở GOFA",self,@"autoWake"); [wake setProperty:@NO forKey:@"default"]; [items addObject:wake];
  PSSpecifier *exit=GOFASwitch(@"Thoát GOFA khi ngắt CarPlay",self,@"autoExit"); [exit setProperty:@NO forKey:@"default"]; [items addObject:exit];
- PSSpecifier *note=[PSSpecifier groupSpecifierWithName:@""]; [note setProperty:@"Tự mở nguồn khi bong bóng hoạt động. Tự thoát sau 20 giây ngắt CarPlay; kết nối lại sẽ hủy đếm giờ." forKey:@"footerText"]; [items addObject:note];
- [items addObject:[PSSpecifier groupSpecifierWithName:@"Cảnh báo vượt tốc độ"]];
+ [items addObject:GOFAHUDGroup(@"Cảnh báo vượt tốc độ")];
  [items addObject:GOFAChoice(@"Phạm vi",self,@"overspeedScope",@[@"off",@"map",@"screen"],@[@"Tắt",@"Bong bóng",@"Màn hình"],@"off")];
  [items addObject:GOFAChoice(@"Màu giao diện",self,@"theme",@[@"auto",@"light",@"dark"],@[@"Tự động",@"Sáng",@"Tối"],@"auto")];
- PSSpecifier *group=[PSSpecifier groupSpecifierWithName:@"Bố cục bong bóng"];
+ PSSpecifier *group=GOFAHUDGroup(@"Bố cục bong bóng");
  [group setProperty:@"Điều chỉnh riêng cho từng màn hình." forKey:@"footerText"]; [items addObject:group];
  for (NSUInteger i=0;i<2;i++) {
    PSSpecifier *surface=[PSSpecifier preferenceSpecifierNamed:i ? @"CarPlay" : @"iPhone" target:self set:NULL get:NULL detail:GOFAHUDSurfaceController.class cell:1 edit:Nil];
    [surface setProperty:@(i==1) forKey:@"car"]; [surface setProperty:@YES forKey:@"isController"]; [items addObject:surface];
  }
- PSSpecifier *help=[PSSpecifier groupSpecifierWithName:@"Sử dụng"];
+ PSSpecifier *help=GOFAHUDGroup(@"Sử dụng");
  [help setProperty:@"Kéo bong bóng để đổi vị trí. Chạm một lần để mở GOFA. Kéo vào dấu X để tắt; mở lại GOFA rồi chuyển ứng dụng để hiện lại." forKey:@"footerText"]; [items addObject:help];
- [items addObject:[PSSpecifier groupSpecifierWithName:@"Hỗ trợ"]]; PSSpecifier *send=[PSSpecifier preferenceSpecifierNamed:@"Gửi logs" target:self set:NULL get:NULL detail:Nil cell:13 edit:Nil]; [send setButtonAction:@selector(sendLogs)]; [items addObject:send]; PSSpecifier *sendNote=[PSSpecifier groupSpecifierWithName:@""]; [sendNote setProperty:@"Gom đầy đủ log đọc được rồi mở bảng chia sẻ file của iOS. Bạn chọn ứng dụng và người nhận; tweak không tự gửi log." forKey:@"footerText"]; [items addObject:sendNote];
- PSSpecifier *test=[PSSpecifier preferenceSpecifierNamed:@"Thử hiển thị" target:self set:NULL get:NULL detail:Nil cell:4 edit:Nil]; [test setProperty:GOFATestCell.class forKey:@"cellClass"]; [test setProperty:@YES forKey:@"enabled"]; [test setProperty:@52 forKey:@"height"]; [items addObject:test]; PSSpecifier *testNote=[PSSpecifier groupSpecifierWithName:@""]; [testNote setProperty:@"Dữ liệu thử có nhãn TEST và tự tắt sau 60 giây. Chỉ dùng thử khi xe đang đỗ." forKey:@"footerText"]; [items addObject:testNote];
+ PSSpecifier *supportGroup=GOFAHUDGroup(@"Hỗ trợ"); [supportGroup setProperty:@"Gom đầy đủ log đọc được rồi mở bảng chia sẻ file của iOS. Bạn chọn ứng dụng và người nhận; tweak không tự gửi log." forKey:@"footerText"]; [items addObject:supportGroup]; PSSpecifier *send=[PSSpecifier preferenceSpecifierNamed:@"Gửi logs" target:self set:NULL get:NULL detail:Nil cell:13 edit:Nil]; [send setButtonAction:@selector(sendLogs)]; [items addObject:send];
+ PSSpecifier *testGroup=GOFAHUDGroup(@"Test hiển thị bong bóng"); [testGroup setProperty:@"Dữ liệu thử có nhãn TEST và tự tắt sau 60 giây. Chỉ dùng thử khi xe đang đỗ." forKey:@"footerText"]; [items addObject:testGroup];
+ PSSpecifier *test=[PSSpecifier preferenceSpecifierNamed:@"Thử hiển thị" target:self set:NULL get:NULL detail:Nil cell:4 edit:Nil]; [test setProperty:GOFATestCell.class forKey:@"cellClass"]; [test setProperty:@YES forKey:@"enabled"]; [test setProperty:@52 forKey:@"height"]; [items addObject:test];
  self.items=items; Ivar storage=class_getInstanceVariable(PSListController.class,"_specifiers"); if(storage) object_setIvar(self,storage,items); return items;
 }
 @end

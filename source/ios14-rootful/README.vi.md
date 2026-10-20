@@ -1,4 +1,4 @@
-# GOFA HUD — source 0.3.3 (ios14-rootful)
+# GOFA HUD — source 0.3.3-1 (ios14-rootful)
 
 Source của bản đã kiểm thử trên iPhone 6s, iOS 15.8.8, Dopamine rootless, GOFA 4.2.1. Bong bóng iPhone và CarPlay lấy cùng nguồn GOFA; CarPlay đã thử qua Home, Google Maps và YouTube Music, kéo vị trí, chạm mở GOFA trên xe, kéo vào X tắt và hiện lại khi rời GOFA. Kích thước CarPlay còn 70% mỗi chiều. Camera thật còn cần kiểm chứng trên đường.
 
@@ -48,3 +48,9 @@ Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2
 Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
 
 Nút Gửi logs của bản 0.3.3 đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+
+## Gửi logs — 0.3.3-1
+
+Thêm nhãn Test hiển thị bong bóng phía trên các nút thử; phần giải thích đặt sát dưới ô cài đặt và thu gọn khoảng cách giữa các mục. Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
+
+Chức năng Gửi logs đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.

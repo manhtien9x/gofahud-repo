@@ -1,5 +1,5 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.3-1",
   "profile": "rootless",
   "changedRuntimeFiles": [
     "var/jb/Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs"
@@ -9,8 +9,8 @@
   "pageSignaturesVerified": true,
   "retainsGOFA422Fix": true,
   "runtimeRetestRequired": false,
-  "file": "GOFAHUD-0.3.3-rootless.deb",
-  "bytes": 648992,
-  "sha256": "4dd3d7f1b1432c9b74ca06056bb009c7c00e65056943ee5ab45d223a4733411c",
+  "file": "GOFAHUD-0.3.3-1-rootless.deb",
+  "bytes": 652860,
+  "sha256": "7adaaf345d8e7f5525c5464f2695af985e019748925a892cce5754de38c39244",
   "directShareConfirmedOnIOS1588": true
 }

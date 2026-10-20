@@ -1,9 +1,9 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.3-1",
   "profile": "roothide",
-  "file": "GOFAHUD-0.3.3-roothide.deb",
-  "bytes": 1299766,
-  "sha256": "9e8a38f33fe9b4463803918d463807a22023f54af397307c7f07ea73f27cbcb0",
+  "file": "GOFAHUD-0.3.3-1-roothide.deb",
+  "bytes": 1308302,
+  "sha256": "63799539cbad587022ccd27c08155cb43745de36e25ca8033da2aae1aab3120c",
   "officialPatcherCommit": "80c16e08da33fecd27c0ff35777f37afd171868b",
   "pageSignaturesVerified": true,
   "physicalPathTrustcacheInstaller": true,
@@ -54,8 +54,8 @@
     {
       "path": "Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs",
       "cdhashes": [
-        "fef19f44dd635257cf06c443be0f7d770db66295",
-        "215b08e07af4642af6251240534b0e0d4334ff40"
+        "e140b9fc024da79f652f40ed1c004b6cb97a3b48",
+        "e5469dc8b85941ced4d6159982da8a42f9ebfe5c"
       ]
     },
     {

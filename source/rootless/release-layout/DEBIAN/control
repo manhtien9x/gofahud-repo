@@ -1,6 +1,6 @@
 Package: local.gofahud
 Name: GOFA HUD (Rootless)
-Version: 0.3.3
+Version: 0.3.3-1
 Architecture: iphoneos-arm64
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou

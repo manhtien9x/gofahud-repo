@@ -1,6 +1,6 @@
 Package: local.gofahud
 Name: GOFA HUD (RootHide)
-Version: 0.3.3
+Version: 0.3.3-1
 Architecture: iphoneos-arm64e
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou

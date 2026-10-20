@@ -1,5 +1,5 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.3-1",
   "profile": "ios14-rootful",
   "changedRuntimeFiles": [
     "Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs"
@@ -9,8 +9,8 @@
   "pageSignaturesVerified": true,
   "retainsGOFA422Fix": true,
   "runtimeRetestRequired": true,
-  "file": "GOFAHUD-0.3.3-rootful.deb",
-  "bytes": 459952,
-  "sha256": "d72c8489bb833c5649b6186c004192748c2459ee3890a89694bc0b42939aa9bc",
+  "file": "GOFAHUD-0.3.3-1-rootful.deb",
+  "bytes": 461870,
+  "sha256": "434da82c854622873bbfdabbd0e5a8affbc404834c7c17e1effb516c8480ae88",
   "directShareConfirmedOnIOS1588": false
 }

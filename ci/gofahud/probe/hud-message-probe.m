@@ -13,6 +13,8 @@
 #import "speed-state.h"
 #import "hud-live-state.h"
 #include "hud-protocol.h"
+#import "gofa-source-profile.h"
+static GOFAHUDSourceProfile sourceProfile;
 static int producerToken=-1,hudLimitToken=-1,hudCameraToken=-1,hudSpeedToken=-1,residentialToken=-1,noPassingToken=-1;
 static NSNumber *previousHUDSpeed;
 static BOOL HUDSpeedChanged;
@@ -52,7 +54,7 @@ static void PublishSigns(id current,double received) {
     uintptr_t kind=0,witness=0,tagAddress=0;
     if(!type || !Read((uintptr_t)type,&kind,8) || kind!=0x202 || !Read((uintptr_t)type-8,&witness,8) || !Read(witness+88,&tagAddress,8) || !tagAddress) return;
     uint32_t v[5]={0};
-    if(((TagFn)tagAddress)((const void *)(p+160),type)!=0 || !Read(p+160,v,sizeof(v))) return;
+    if(((TagFn)tagAddress)((const void *)(p+sourceProfile.signOffset),type)!=0 || !Read(p+sourceProfile.signOffset,v,sizeof(v))) return;
     uint32_t limit=GOFAHUDLimit(v[0]);
     Publish(hudLimitToken,GOFAHUDLimitName,limit ? GVMEncodeSample(@(limit),received) : 0);
     uint32_t sign=GOFAHUDIsCamera(v[1]) ? v[1] : GOFAHUDIsCamera(v[3]) ? v[3] : 0;
@@ -69,7 +71,7 @@ void GOFAHUDOnSourceEvent(double received,NSNumber *processedKmH) {
         id current=owner;
         if(!current) return;
         uintptr_t p=(uintptr_t)(__bridge void *)current; int64_t speed=0; uint8_t none=1;
-        if(Read(p+200,&speed,8) && Read(p+208,&none,1) && none==0 && speed>=0 && speed<=400) {
+        if(Read(p+sourceProfile.speedOffset,&speed,8) && Read(p+sourceProfile.speedOffset+8,&none,1) && none==0 && speed>=0 && speed<=400) {
             NSNumber *value=@(speed);
             if(previousHUDSpeed && ![previousHUDSpeed isEqual:value]) HUDSpeedChanged=YES;
             previousHUDSpeed=value;
@@ -80,23 +82,10 @@ void GOFAHUDOnSourceEvent(double received,NSNumber *processedKmH) {
     });
 }
 static BOOL CorrectBuild(void) {
-    const struct mach_header_64 *h=NULL;
-    for(uint32_t i=0;i<_dyld_image_count();i++) {
-        const char *name=_dyld_get_image_name(i);
-        if(name && [[NSString stringWithUTF8String:name] hasSuffix:@"/GOFA.app/GOFA"]) { h=(const void *)_dyld_get_image_header(i); break; }
-    }
-    if(!h || h->magic!=MH_MAGIC_64) return NO;
-    const struct load_command *c=(const void *)(h+1);
-    for(uint32_t i=0;i<h->ncmds;i++) {
-        if(c->cmd==LC_UUID) {
-            NSString *uuid=[[[NSUUID alloc] initWithUUIDBytes:((const struct uuid_command *)c)->uuid] UUIDString];
-            [uuid writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"gofahud-hud-loaded-uuid.log"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
-            return [uuid isEqual:@"44EBEBC6-B59E-32DA-B194-966837FC2AF2"];
-        }
-        if(c->cmdsize<sizeof(*c)) return NO;
-        c=(const void *)((const char *)c+c->cmdsize);
-    }
-    return NO;
+    NSString *uuid=nil;
+    BOOL matched=GOFAHUDGetSourceProfile(&sourceProfile,&uuid);
+    [uuid ?: @"unavailable" writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"gofahud-hud-loaded-uuid.log"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    return matched;
 }
 static id Init(id self,SEL cmd,id delegate,dispatch_queue_t queue,NSDictionary *options) {
     id result=originalInit(self,cmd,delegate,queue,options);
@@ -114,17 +103,17 @@ static void Inspect(void) {
     free(methods); report[@"methods"]=names;
     if(current) {
         uintptr_t p=(uintptr_t)(__bridge void *)current,connection=0; int64_t speed=0; uint8_t none=1;
-        if(Read(p+200,&speed,8) && Read(p+208,&none,1) && none==0 && speed>=0 && speed<=400) report[@"lastUserSpeed"]=@(speed);
-        if(Read(p+104,&connection,8)) report[@"hasConnectedPeripheral"]=@(connection!=0);
+        if(Read(p+sourceProfile.speedOffset,&speed,8) && Read(p+sourceProfile.speedOffset+8,&none,1) && none==0 && speed>=0 && speed<=400) report[@"lastUserSpeed"]=@(speed);
+        if(Read(p+sourceProfile.peripheralOffset,&connection,8)) report[@"hasConnectedPeripheral"]=@(connection!=0);
         ResolveFn resolve=dlsym(RTLD_DEFAULT,"swift_getTypeByMangledNameInContext");
         const char *mangled="Sqy4GOFA11SignMessageVG";
         const void *type=resolve ? resolve(mangled,strlen(mangled),NULL,NULL) : NULL;
         uintptr_t kind=0,witness=0,tagAddress=0;
         if(type && Read((uintptr_t)type,&kind,8) && kind==0x202 && Read((uintptr_t)type-8,&witness,8) && Read(witness+88,&tagAddress,8) && tagAddress) {
-            unsigned tag=((TagFn)tagAddress)((const void *)(p+160),type);
+            unsigned tag=((TagFn)tagAddress)((const void *)(p+sourceProfile.signOffset),type);
             report[@"hasSignMessage"]=@(tag==0);
             uint32_t values[5]={0};
-            if(tag==0 && Read(p+160,values,sizeof(values))) report[@"signMessage"]=@{@"position1":@(values[0]),@"position2":@(values[1]),@"distance2":@(values[2]),@"position3":@(values[3]),@"distance3":@(values[4])};
+            if(tag==0 && Read(p+sourceProfile.signOffset,values,sizeof(values))) report[@"signMessage"]=@{@"position1":@(values[0]),@"position2":@(values[1]),@"distance2":@(values[2]),@"position3":@(values[3]),@"distance3":@(values[4])};
         }
     }
     [[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil] writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"gofahud-hud-message-cache.json"] atomically:YES];
@@ -132,7 +121,7 @@ static void Inspect(void) {
 __attribute__((constructor)) static void Start(void) {
     if(![NSBundle.mainBundle.bundleIdentifier isEqual:@"com.lumi.GOFA"]) return;
     BOOL correct=CorrectBuild();
-    [[NSString stringWithFormat:@"HUD probe build guard=%d",correct] writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"gofahud-hud-startup.log"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    [[NSString stringWithFormat:@"HUD probe build guard=%d; version=%@; signOffset=%lu; speedOffset=%lu",correct,[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"],(unsigned long)sourceProfile.signOffset,(unsigned long)sourceProfile.speedOffset] writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"gofahud-hud-startup.log"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
     if(!correct) return;
     notify_register_check(GOFAHUDProducerName,&producerToken); notify_register_check(GOFAHUDLimitName,&hudLimitToken);
     notify_register_check(GOFAHUDCameraName,&hudCameraToken); notify_register_check(GVMSpeedStateName,&hudSpeedToken);

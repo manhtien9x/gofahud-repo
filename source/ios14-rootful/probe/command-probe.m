@@ -1,3 +1,4 @@
+#import "gofa-source-profile.h"
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <objc/runtime.h>
@@ -167,7 +168,7 @@ static void InstallCurrent(void) {
     if(hook && send) hook(send,(void *)CurrentSend,(void **)&originalCurrentSend);
 }
 __attribute__((constructor)) static void Start(void) {
-    if(![NSBundle.mainBundle.bundleIdentifier isEqual:@"com.lumi.GOFA"] || ![[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"] isEqual:@"4.2.1"]) return;
+    if(!GOFAHUDGetSourceProfile(NULL,NULL)) return;
     notify_register_check("local.gofahud.source.ready",&readyToken);
     notify_register_check(GVMSpeedStateName,&liveSpeedToken);
     notify_register_check(GOFAHUDProducerName,&producerToken);

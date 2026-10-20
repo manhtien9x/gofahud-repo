@@ -1,9 +1,14 @@
 {
-  "version": "0.3.1-1",
+  "version": "0.3.2",
   "profile": "ios14-rootful",
-  "runtimeStatus": "User confirmed working on the previously tested iOS targets",
-  "confirmedDate": "2026-10-15",
-  "confirmedIOSTargets": [
-    "14.1"
-  ]
+  "changedRuntimeFiles": [
+    "Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib"
+  ],
+  "taurineBridgeFixPreserved": true,
+  "swiftReflectionProbesExcluded": true,
+  "gofaVersionOnIOS14": "4.2.1; GOFA 4.2.2 requires iOS 15",
+  "runtimeRetestRequired": true,
+  "file": "GOFAHUD-0.3.2-rootful.deb",
+  "bytes": 461172,
+  "sha256": "0eb31ae8c0b13c7c8a1c30565ebad4c186306f779fe651eace2a6b2ff56e923c"
 }

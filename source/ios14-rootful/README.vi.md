@@ -1,4 +1,4 @@
-# GOFA HUD — source 0.2.0
+# GOFA HUD — source 0.3.2 (ios14-rootful)
 
 Source của bản đã kiểm thử trên iPhone 6s, iOS 15.8.8, Dopamine rootless, GOFA 4.2.1. Bong bóng iPhone và CarPlay lấy cùng nguồn GOFA; CarPlay đã thử qua Home, Google Maps và YouTube Music, kéo vị trí, chạm mở GOFA trên xe, kéo vào X tắt và hiện lại khi rời GOFA. Kích thước CarPlay còn 70% mỗi chiều. Camera thật còn cần kiểm chứng trên đường.
 
@@ -36,3 +36,9 @@ python3 tools/build_portable.py
 Kết quả chưa ký nằm ở `build/`. Cần ký bằng ldid trước khi đóng gói và cài. Bản phát hành 0.2.0 đã lấy binary ký trực tiếp từ máy thử; build lại từ source không bảo đảm cùng checksum với bản phát hành.
 
 Giữ LICENSE MIT của GMapHUD. Nguồn nền: https://github.com/bechou0410/gmaphud. GOFA 4.2.1 là profile đã kiểm chứng; không đọc model của phiên bản khác khi chưa xác minh.
+
+## Trạng thái phát hành 0.3.2
+
+Rootless/RootHide: GOFA 4.2.1 hoặc 4.2.2. iOS 14 Rootful: GOFA 4.2.1, vì GOFA 4.2.2 yêu cầu iOS 15 trở lên.
+
+Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.

@@ -1,10 +1,23 @@
 {
-  "version": "0.3.1",
-  "profile": "rootless",
-  "runtimeStatus": "User confirmed working on the previously tested iOS targets",
-  "confirmedDate": "2026-10-15",
-  "confirmedIOSTargets": [
-    "15.8.8",
-    "16.3"
-  ]
+  "version": "0.3.2",
+  "change": "GOFA 4.2.2 build 3 source profile and manager-init capture",
+  "changedRuntimeFiles": [
+    "var/jb/Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib"
+  ],
+  "newProbeCdhashes": [
+    "d7afa4da961ff0127a5acd06cb49838d10e844fa",
+    "773941826a4a98e4aa11e65ef39c50edbaf2ddda"
+  ],
+  "old421ProfileRetained": true,
+  "ios1588LiveTest": {
+    "speedKmH": 3,
+    "limitKmH": 50,
+    "speedQuality": "fresh",
+    "background": true
+  },
+  "arm64eBuild": "Apple clang via GitHub Actions; device retest pending",
+  "camera": "mapping preserved; no nearby camera for real alert test",
+  "file": "GOFAHUD-0.3.2-rootless.deb",
+  "bytes": 651838,
+  "sha256": "40ca1365d8fe30397a3fd4d01b3bb46cbdf1c0757f467da1254e95b357f9f6e6"
 }

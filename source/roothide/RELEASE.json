@@ -1,9 +1,75 @@
 {
-  "version": "0.3.1",
+  "version": "0.3.2",
   "profile": "roothide",
-  "runtimeStatus": "User confirmed working on the previously tested iOS targets",
-  "confirmedDate": "2026-10-15",
-  "confirmedIOSTargets": [
-    "16.7"
-  ]
+  "file": "GOFAHUD-0.3.2-roothide.deb",
+  "bytes": 1306220,
+  "sha256": "eb4c17e7a152e8fba0ae31608f0303edd4b04e899f545330751a9e4e2cf10df1",
+  "officialPatcherCommit": "80c16e08da33fecd27c0ff35777f37afd171868b",
+  "pageSignaturesVerified": true,
+  "physicalPathTrustcacheInstaller": true,
+  "autoPatchesSymlinks": 9,
+  "binaries": [
+    {
+      "path": "Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib",
+      "cdhashes": [
+        "5cef91d7c414d0ff9259ffa467e595d170b94f59",
+        "a088746a91b7bd4305daed283da7d5480db7c759"
+      ]
+    },
+    {
+      "path": "Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib",
+      "cdhashes": [
+        "c1a289a77a7c6d07adf1429295cf4a9d1eb0570d",
+        "95a7eac95cec41179bf01c219bc90b9f6146cd3b"
+      ]
+    },
+    {
+      "path": "Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib",
+      "cdhashes": [
+        "7c4924dd176b0679dc9b92964d5828fa81c55191",
+        "00fa73ec6f00f21fd205ef2e421a87617c2fcef2"
+      ]
+    },
+    {
+      "path": "Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib",
+      "cdhashes": [
+        "df7750cd9e95bf02d739b02355c390765786b84a",
+        "ed39482fd8afbe2a98062e38e5c696ac7a953301"
+      ]
+    },
+    {
+      "path": "Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib",
+      "cdhashes": [
+        "c7e4b3d14785575bbde57e80c244d867a3600aed",
+        "14b7d478602cd899eb93a9e74502aa4c94470941"
+      ]
+    },
+    {
+      "path": "Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib",
+      "cdhashes": [
+        "df676b1a92759bc1999bda2098200191eda12f49",
+        "3814506463d36f7f70051409563e796cd0b26dc3"
+      ]
+    },
+    {
+      "path": "Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs",
+      "cdhashes": [
+        "0d1b01f091fe1cbc82a3f99088cc2bfff6274d6c",
+        "92312db2061b08ee385aa0153d78882f53df19cc"
+      ]
+    },
+    {
+      "path": "usr/libexec/gofahud-tests/gofahud-native-speed-bridge",
+      "cdhashes": [
+        "6a9414a8634b5962ce5953179c2ecd8b8ed2a99f"
+      ]
+    },
+    {
+      "path": "usr/libexec/gofahud-tests/gofahud-test-speed",
+      "cdhashes": [
+        "221240772f31db3d1f8392f8d493536ba4705535"
+      ]
+    }
+  ],
+  "runtimeRetestRequired": true
 }

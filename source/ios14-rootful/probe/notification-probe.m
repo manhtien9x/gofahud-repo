@@ -1,3 +1,4 @@
+#import "gofa-source-profile.h"
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #include <dlfcn.h>
@@ -63,8 +64,7 @@ static void Post(id self,SEL sel,id name,id object,id info) {
     postOriginal(self,sel,name,object,info);
 }
 __attribute__((constructor)) static void Start(void) {
-    if (![NSBundle.mainBundle.bundleIdentifier isEqual:@"com.lumi.GOFA"] ||
-        ![[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"] isEqual:@"4.2.1"]) return;
+    if(!GOFAHUDGetSourceProfile(NULL,NULL)) return;
     dispatch_async(dispatch_get_main_queue(), ^{
         originals=[NSMutableDictionary dictionary]; events=[NSMutableArray array];
         void *lib=dlopen("/usr/lib/libsubstrate.dylib",RTLD_NOW);

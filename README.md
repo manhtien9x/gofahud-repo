@@ -1,4 +1,4 @@
-# GOFA HUD 0.3.1
+# GOFA HUD 0.3.2
 
 Bong bóng cảnh báo GOFA trên iPhone và CarPlay.
 
@@ -15,9 +15,9 @@ Bong bóng cảnh báo GOFA trên iPhone và CarPlay.
 
 ## Các gói
 
-- [Rootless](./GOFAHUD-0.3.1-rootless.deb): iOS 15–16, Dopamine Rootless.
-- [RootHide](./GOFAHUD-0.3.1-roothide.deb): RootHide; cần rootless-compat từ 0.9.
-- [iOS 14 Rootful](./GOFAHUD-0.3.1-1-rootful.deb): Dành cho iOS 14 Rootful.
+- [Rootless](./GOFAHUD-0.3.2-rootless.deb): iOS 15–16, Dopamine Rootless.
+- [RootHide](./GOFAHUD-0.3.2-roothide.deb): RootHide; cần rootless-compat từ 0.9.
+- [iOS 14 Rootful](./GOFAHUD-0.3.2-rootful.deb): Dành cho iOS 14 Rootful.
 
 ## Hướng dẫn sử dụng
 
@@ -29,7 +29,7 @@ Thêm nguồn https://manhtien9x.github.io/gofahud-repo/ vào Sileo hoặc Zebra
 - **Dopamine Rootless trên iOS 15–16:** dùng gói Rootless.
 - **RootHide:** dùng gói RootHide và cài rootless-compat từ 0.9.
 
-Cài gói, Respring rồi mở GOFA 4.2.1. Vào **Cài đặt → GOFA → Vị trí**, chọn **Luôn luôn** và bật **Vị trí chính xác**. Đợi GOFA nhận thông tin rồi về Home hoặc chuyển sang ứng dụng khác để hiện bong bóng.
+Cài gói, Respring rồi mở GOFA 4.2.1 hoặc 4.2.2 (iOS 14 dùng GOFA 4.2.1). Vào **Cài đặt → GOFA → Vị trí**, chọn **Luôn luôn** và bật **Vị trí chính xác**. Đợi GOFA nhận thông tin rồi về Home hoặc chuyển sang ứng dụng khác để hiện bong bóng.
 
 ### 2. Điều khiển bong bóng
 
@@ -67,10 +67,16 @@ File TXT gom nội dung các tệp đọc được trong Logs, CrashReporter và
 - Nếu thiếu tốc độ hoặc biển báo, kiểm tra dữ liệu trong GOFA trước, quyền vị trí Luôn luôn và Vị trí chính xác. Mở GOFA để nhận dữ liệu rồi chuyển app; không bật chế độ TEST khi đối chiếu dữ liệu thật.
 - Nếu vẫn lỗi, xuất TXT ngay sau khi thử lại và gửi kèm phiên bản iOS, GOFA, GOFA HUD cùng môi trường jailbreak.
 
-Đã kiểm thử thành công trên iOS 14.1, 15.8.8, 16.3 và 16.7 theo xác nhận của người dùng ngày 15/10/2026. Chọn đúng gói theo môi trường jailbreak; cần GOFA 4.2.1. Không xác nhận iOS17/18.
+Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+
+Rootless/RootHide: GOFA 4.2.1 hoặc 4.2.2. iOS 14 Rootful: GOFA 4.2.1, vì GOFA 4.2.2 yêu cầu iOS 15 trở lên. Không xác nhận iOS17/18.
 
 Mã tích hợp từ GMapHUD của chou theo giấy phép MIT được ghi trong source/upstream.
 
-## Rootful 0.3.1-1
+## Thay đổi trong 0.3.2
 
-Sửa cầu nối gọi nhầm jbctl của Dopamine trên Taurine Rootful. Giữ các tính năng giao diện và xuất TXT. Rootless/RootHide giữ bản 0.3.1 đã kiểm thử.
+Sửa mất dữ liệu khi GOFA cập nhật lên 4.2.2. Thêm profile version/UUID riêng và bắt nguồn HUD sau init gốc, giữ hỗ trợ 4.2.1. Giữ bản sửa cầu nối Taurine và các loại trừ Swift trên iOS 14.
+
+Bản 0.3.2 đã xác nhận nhận tốc độ và giới hạn từ GOFA 4.2.2 khi chạy nền trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Các bản trước đã được xác nhận hoạt động trên iOS 14.1, 15.8.8, 16.3 và 16.7. Camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
+
+Rootless/RootHide: GOFA 4.2.1 hoặc 4.2.2. iOS 14 Rootful: GOFA 4.2.1, vì GOFA 4.2.2 yêu cầu iOS 15 trở lên.

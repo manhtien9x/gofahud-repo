@@ -8,7 +8,7 @@ Thêm nguồn https://manhtien9x.github.io/gofahud-repo/ vào Sileo hoặc Zebra
 - **Dopamine Rootless trên iOS 15–16:** dùng gói Rootless.
 - **RootHide:** dùng gói RootHide và cài rootless-compat từ 0.9.
 
-Cài gói, Respring rồi mở GOFA 4.2.1. Vào **Cài đặt → GOFA → Vị trí**, chọn **Luôn luôn** và bật **Vị trí chính xác**. Đợi GOFA nhận thông tin rồi về Home hoặc chuyển sang ứng dụng khác để hiện bong bóng.
+Cài gói, Respring rồi mở GOFA 4.2.1 hoặc 4.2.2 (iOS 14 dùng GOFA 4.2.1). Vào **Cài đặt → GOFA → Vị trí**, chọn **Luôn luôn** và bật **Vị trí chính xác**. Đợi GOFA nhận thông tin rồi về Home hoặc chuyển sang ứng dụng khác để hiện bong bóng.
 
 ### 2. Điều khiển bong bóng
 

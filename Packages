@@ -1,6 +1,6 @@
 Package: local.gofahud
 Name: GOFA HUD (Rootless)
-Version: 0.3.1
+Version: 0.3.2
 Architecture: iphoneos-arm64
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -8,24 +8,21 @@ Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
  Tương thích: iOS 15–16, Dopamine Rootless.
- Bố cục ngang/dọc, kích cỡ, vị trí và thứ tự các phần.
- Tự co giãn khi có camera, khu dân cư hoặc cấm vượt.
- Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
- Xuất TXT đầy đủ các log đọc được và CrashReporter.
- Cần GOFA 4.2.1.
- Đã kiểm thử thành công trên các bản iOS tương ứng; cập nhật ngày 15/10/2026.
+ Hỗ trợ GOFA 4.2.1 và 4.2.2.
+ Bố cục, kích cỡ, cảnh báo tự co giãn và xuất TXT đầy đủ.
+ Bản 0.3.2 cập nhật cấu hình nguồn GOFA; giữ tương thích bản cũ.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.1-rootless.deb
-Size: 648224
+Filename: GOFAHUD-0.3.2-rootless.deb
+Size: 651838
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-rootless.html
-MD5sum: 495313f7128cce266ee185f6f147aff3
-SHA1: 543217fff3081089be0627f3aed98badf1ecfecc
-SHA256: 62d6d818384844591217d74ab446404637127752e1b23bc1f9754ef1da297ad5
-SHA512: b5fe471e188ef067f47624a40eb6d9632be9dac27186883f6e46cf9c3759a15435f4a47c0d4081b45d4d855e39c8e9d0b0f607f33c18a8ddf688c94a2a999be8
+MD5sum: 503316628de084047bbed2ce31aecca2
+SHA1: c75503e0d9dc28ee636646fd5f7b1d67fd4378d3
+SHA256: 40ca1365d8fe30397a3fd4d01b3bb46cbdf1c0757f467da1254e95b357f9f6e6
+SHA512: ee1183cd5c1a68d37de0787d746f98d32b0b6b609bb035fe3335c8711f34a40deee223711f8600f42527ebb24d367d35299fa661c84f1e05009c27f088886d3f
 
 Package: local.gofahud
 Name: GOFA HUD (RootHide)
-Version: 0.3.1
+Version: 0.3.2
 Architecture: iphoneos-arm64e
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -33,25 +30,22 @@ Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
  Tương thích: RootHide; cần rootless-compat từ 0.9.
- Bố cục ngang/dọc, kích cỡ, vị trí và thứ tự các phần.
- Tự co giãn khi có camera, khu dân cư hoặc cấm vượt.
- Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
- Xuất TXT đầy đủ các log đọc được và CrashReporter.
- Cần GOFA 4.2.1.
- Đã kiểm thử thành công trên các bản iOS tương ứng; cập nhật ngày 15/10/2026.
+ Hỗ trợ GOFA 4.2.1 và 4.2.2.
+ Bố cục, kích cỡ, cảnh báo tự co giãn và xuất TXT đầy đủ.
+ Bản 0.3.2 cập nhật cấu hình nguồn GOFA; giữ tương thích bản cũ.
 Tag: role::enduser
 Pre-Depends: rootless-compat(>= 0.9)
-Filename: GOFAHUD-0.3.1-roothide.deb
-Size: 1298522
+Filename: GOFAHUD-0.3.2-roothide.deb
+Size: 1306220
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-roothide.html
-MD5sum: 16e0cb916c359049fc8bc76195121b4c
-SHA1: 206bfb3bfee3aa2d55baef543c14ec0c143f92c8
-SHA256: 73b01c61d83e047d0e306ea4b3c6d7a3f0d6ff798a11a1bd8a9e339815f197ae
-SHA512: 5fca396029f3ab6173aed9d7879659fd03412b361e12ccd9b83a01a1e57db8f81d3ed856f63bc41fd35673771dc07b710ec0fe7a80b8ead427868fd8c8ec5bdb
+MD5sum: b79ed00a54f99562fb56480186015847
+SHA1: ac074bd5d8387a8ee5ce23f0193c15dcc6b6b388
+SHA256: eb4c17e7a152e8fba0ae31608f0303edd4b04e899f545330751a9e4e2cf10df1
+SHA512: ddbb02e6ad70ec118fab15127175f6663747cf6598e71e85d9a2f63daf77d991675ef75323f9a7b95a09ebe9b54d2cb7eda0b2fe075e8529809e144980c56680
 
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.1-1
+Version: 0.3.2
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -59,18 +53,15 @@ Section: Tweaks
 Depends: firmware (>= 14.0), firmware (<< 15.0), org.coolstar.libhooker, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
  Tương thích: Dành cho iOS 14 Rootful.
- Bố cục ngang/dọc, kích cỡ, vị trí và thứ tự các phần.
- Tự co giãn khi có camera, khu dân cư hoặc cấm vượt.
- Icon cảnh báo kèm khoảng cách; có cảnh báo vượt tốc độ.
- Xuất TXT đầy đủ các log đọc được và CrashReporter.
- Cần GOFA 4.2.1.
- Đã kiểm thử thành công trên các bản iOS tương ứng; cập nhật ngày 15/10/2026.
+ Cần GOFA 4.2.1 trên iOS 14.
+ Bố cục, kích cỡ, cảnh báo tự co giãn và xuất TXT đầy đủ.
+ Bản 0.3.2 cập nhật cấu hình nguồn GOFA; giữ tương thích bản cũ.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.1-1-rootful.deb
-Size: 459720
+Filename: GOFAHUD-0.3.2-rootful.deb
+Size: 461172
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-ios14.html
-MD5sum: 41e2d6692c5b6eed8ea9965c7058c83d
-SHA1: 2f085f3182736b056fe1a345b3dedeb17003194c
-SHA256: 48e7e20f051a5b316795d2b0f64a541789437286c10f599281aadc1205876b85
-SHA512: d95c15a02e428038ad9a086e18cd92e28d0cacad214da16ec676f955dc3a6d520c3334fe1c80cb6f46574fb3a4e5147f0695b8b841fda0ff50be972bf16db0d8
+MD5sum: 764e2bcb403c75f0671cec304db257ad
+SHA1: 764adf1cfa18b589c808c87112afb65cd7e50d39
+SHA256: 0eb31ae8c0b13c7c8a1c30565ebad4c186306f779fe651eace2a6b2ff56e923c
+SHA512: c8ea04edd38852c548a2a085cf430e60d0a93b8af057ab8f0f8f3f4cf3111fd62fa9cd24e256ec90f7baa8e5bb9c76017bed68d3020c9d9b2abdc815a4137f44
 

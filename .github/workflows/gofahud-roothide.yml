@@ -29,8 +29,8 @@ jobs:
           python3 ci/roothide/finalize.py
       - uses: actions/upload-artifact@v4
         with:
-          name: gofahud-roothide-033
+          name: gofahud-roothide-0331
           path: |
-            ci/roothide/local.gofahud_0.3.3_iphoneos-arm64e.deb
+            ci/roothide/local.gofahud_0.3.3-1_iphoneos-arm64e.deb
             ci/roothide/PATCHER-COMMIT.txt
           retention-days: 7

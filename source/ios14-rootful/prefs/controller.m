@@ -39,7 +39,7 @@ static NSString *const GOFAPreferencesValueChanged=@"GOFAPreferencesValueChanged
     NSArray *values=[specifier propertyForKey:@"values"];
     CFPreferencesAppSynchronize(CFSTR("local.gofahud"));
     id saved=CFBridgingRelease(CFPreferencesCopyAppValue((__bridge CFStringRef)[specifier propertyForKey:@"key"],CFSTR("local.gofahud")));
-    NSUInteger index=[values indexOfObject:saved?: [specifier propertyForKey:@"default"]];
+    NSUInteger index=[values indexOfObject:saved ?: [specifier propertyForKey:@"default"]];
     self.picker.selectedSegmentIndex=index==NSNotFound ? 0 : (NSInteger)index;
     [self.picker addTarget:self action:@selector(changed:) forControlEvents:UIControlEventValueChanged];
     [self.picker.heightAnchor constraintGreaterThanOrEqualToConstant:44].active=YES;

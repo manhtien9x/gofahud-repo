@@ -5,13 +5,13 @@ mkdir -p "$log_dir"
 log_file="$log_dir/GofaHUD-install.log"
 touch "$log_file"; chmod 0644 "$log_file"
 stamp() { TZ=Asia/Ho_Chi_Minh date '+%Y-%m-%dT%H:%M:%S%z'; }
-printf '%s script=%s action=%s version=0.2.1-beta6-rh1 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log_file"
+printf '%s script=%s action=%s version=0.3.4 begin\n' "$(stamp)" "$0" "${1:-}" >> "$log_file"
 trap 'result=$?; printf "%s script=%s exit=%s\n" "$(stamp)" "$0" "$result" >> "$log_file"' EXIT
 run_output=$(/bin/sh -s -- "$@" 2>&1 <<'GOFAHUD_SCRIPT_BODY'
 set -eu
 export PATH=/usr/bin:/bin:/usr/bin:/bin:/usr/sbin:/sbin
 [ "${1:-}" = configure ] || exit 0
-for file in /Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib /Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib /Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib /Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib /Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib /Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib /usr/libexec/gofahud-tests/gofahud-native-speed-bridge /usr/libexec/gofahud-tests/gofahud-test-speed; do
+for file in /Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs /Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib /Library/MobileSubstrate/DynamicLibraries/GofaCarplayGlobal.dylib /Library/MobileSubstrate/DynamicLibraries/GofaCarplayOverlay.dylib /Library/MobileSubstrate/DynamicLibraries/GofaLaunchHelper.dylib /Library/MobileSubstrate/DynamicLibraries/GofaLifecycle.dylib /Library/MobileSubstrate/DynamicLibraries/GofaPhoneOverlay.dylib /usr/libexec/gofahud-tests/gofahud-native-speed-bridge /usr/libexec/gofahud-tests/gofahud-test-speed; do
     /usr/bin/jbctl trustcache add "$(/usr/bin/jbroot "$file")"
 done
 for label in native-speed drive-recorder diagnostics; do

@@ -1,5 +1,6 @@
 from pathlib import Path
 import hashlib,json,zipfile,os
+# All installed text configuration files are included in the source manifest.
 base=Path(os.environ.get('GOFAHUD_SOURCE_ROOT','source'));out=Path('outputs/releases');out.mkdir(parents=True,exist_ok=True)
 for slug in ['rootless','roothide','ios14-rootful']:
  folder=base/slug

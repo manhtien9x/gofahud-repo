@@ -12,6 +12,7 @@
 #include <math.h>
 #import "speed-state.h"
 #import "hud-live-state.h"
+static uintptr_t rawLocationOffset=8, processedLocationOffset=16;
 static int readyToken=-1,liveSpeedToken=-1,producerToken=-1;
 extern void GOFAHUDOnSourceEvent(double received,NSNumber *processedKmH);
 static BOOL Ready(void) {
@@ -39,14 +40,14 @@ static NSDictionary *LocationSpeed(const void *value) {
     if(!type || !Read((uintptr_t)type,&kind,8) || kind!=0x202 || !Read((uintptr_t)type-8,&witness,8) || !Read(witness+88,&tagAddress,8) || !tagAddress) return @{@"status":@"unresolved"};
     TagFn tag=(TagFn)tagAddress;
     if(tag(value,type)!=0) return @{@"status":@"no-location"};
-    if(!Read((uintptr_t)value+16,&pointer,8) || !pointer) return @{@"status":@"missing-processed-location"};
+    if(!Read((uintptr_t)value+processedLocationOffset,&pointer,8) || !pointer) return @{@"status":@"missing-processed-location"};
     CLLocation *location=(__bridge CLLocation *)(void *)pointer;
     if(![location isKindOfClass:CLLocation.class]) return @{@"status":@"unexpected-type"};
     double age=-location.timestamp.timeIntervalSinceNow;
     // Keep both ages: GOFA may retain an older timestamp in its processed location.
     uintptr_t rawPointer=0;
     CLLocation *raw=nil;
-    if(Read((uintptr_t)value+8,&rawPointer,8) && rawPointer) raw=(__bridge CLLocation *)(void *)rawPointer;
+    if(Read((uintptr_t)value+rawLocationOffset,&rawPointer,8) && rawPointer) raw=(__bridge CLLocation *)(void *)rawPointer;
     double rawAge=[raw isKindOfClass:CLLocation.class] ? -raw.timestamp.timeIntervalSinceNow : INFINITY;
     double sourceAge=isfinite(rawAge) ? rawAge : age;
     return @{@"status":@"processed-location",@"speedMetersPerSecond":@(location.speed),
@@ -168,7 +169,7 @@ static void InstallCurrent(void) {
     if(hook && send) hook(send,(void *)CurrentSend,(void **)&originalCurrentSend);
 }
 __attribute__((constructor)) static void Start(void) {
-    if(!GOFAHUDGetSourceProfile(NULL,NULL)) return;
+    if(!GOFAHUDGetLocationOffsets(&rawLocationOffset,&processedLocationOffset)) return;
     notify_register_check("local.gofahud.source.ready",&readyToken);
     notify_register_check(GVMSpeedStateName,&liveSpeedToken);
     notify_register_check(GOFAHUDProducerName,&producerToken);

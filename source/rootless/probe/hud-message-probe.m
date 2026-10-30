@@ -15,6 +15,7 @@
 #include "hud-protocol.h"
 #import "gofa-source-profile.h"
 static GOFAHUDSourceProfile sourceProfile;
+extern void GOFAHUDDisplayBridgeNativeSignsSeen(void);
 static int producerToken=-1,hudLimitToken=-1,hudCameraToken=-1,hudSpeedToken=-1,residentialToken=-1,noPassingToken=-1;
 static NSNumber *previousHUDSpeed;
 static BOOL HUDSpeedChanged;
@@ -60,7 +61,9 @@ static void PublishSigns(id current,double received) {
     uintptr_t kind=0,witness=0,tagAddress=0;
     if(!type || !Read((uintptr_t)type,&kind,8) || kind!=0x202 || !Read((uintptr_t)type-8,&witness,8) || !Read(witness+88,&tagAddress,8) || !tagAddress) return;
     uint32_t v[5]={0};
-    if(((TagFn)tagAddress)((const void *)(p+sourceProfile.signOffset),type)!=0 || !Read(p+sourceProfile.signOffset,v,sizeof(v))) return;
+    if(((TagFn)tagAddress)((const void *)(p+sourceProfile.signOffset),type)!=0) return;
+    for(unsigned i=0;i<5;i++) if(!Read(p+sourceProfile.signOffset+sourceProfile.signFieldOffsets[i],v+i,4)) return;
+    GOFAHUDDisplayBridgeNativeSignsSeen();
     uint32_t limit=GOFAHUDLimit(v[0]);
     Publish(hudLimitToken,GOFAHUDLimitName,limit ? GVMEncodeSample(@(limit),received) : 0);
     uint32_t sign=GOFAHUDIsCamera(v[1]) ? v[1] : GOFAHUDIsCamera(v[3]) ? v[3] : 0;
@@ -119,7 +122,9 @@ static void Inspect(void) {
             unsigned tag=((TagFn)tagAddress)((const void *)(p+sourceProfile.signOffset),type);
             report[@"hasSignMessage"]=@(tag==0);
             uint32_t values[5]={0};
-            if(tag==0 && Read(p+sourceProfile.signOffset,values,sizeof(values))) report[@"signMessage"]=@{@"position1":@(values[0]),@"position2":@(values[1]),@"distance2":@(values[2]),@"position3":@(values[3]),@"distance3":@(values[4])};
+            BOOL readable=tag==0;
+            for(unsigned i=0;readable && i<5;i++) readable=Read(p+sourceProfile.signOffset+sourceProfile.signFieldOffsets[i],values+i,4);
+            if(readable) report[@"signMessage"]=@{@"position1":@(values[0]),@"position2":@(values[1]),@"distance2":@(values[2]),@"position3":@(values[3]),@"distance3":@(values[4])};
         }
     }
     [[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil] writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"gofahud-hud-message-cache.json"] atomically:YES];

@@ -1,9 +1,9 @@
 {
-  "version": "0.3.3-1",
+  "version": "0.3.4",
   "profile": "roothide",
-  "file": "GOFAHUD-0.3.3-1-roothide.deb",
-  "bytes": 1308302,
-  "sha256": "63799539cbad587022ccd27c08155cb43745de36e25ca8033da2aae1aab3120c",
+  "file": "GOFAHUD-0.3.4-roothide.deb",
+  "bytes": 1338164,
+  "sha256": "dcc3927b42a2ca46fbac3fb1abc32262aa6c7b5277af61721a1cbb3be913b505",
   "officialPatcherCommit": "80c16e08da33fecd27c0ff35777f37afd171868b",
   "pageSignaturesVerified": true,
   "physicalPathTrustcacheInstaller": true,
@@ -12,8 +12,8 @@
     {
       "path": "Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib",
       "cdhashes": [
-        "5cef91d7c414d0ff9259ffa467e595d170b94f59",
-        "a088746a91b7bd4305daed283da7d5480db7c759"
+        "e97cac4f922f05fb44ba28ce9bdff7d7e749e661",
+        "2f7a3b2dc7b470680d5063471306aaba9e61ccea"
       ]
     },
     {

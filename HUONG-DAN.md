@@ -8,7 +8,7 @@ Thêm nguồn https://manhtien9x.github.io/gofahud-repo/ vào Sileo hoặc Zebra
 - **Dopamine Rootless trên iOS 15–16:** dùng gói Rootless.
 - **RootHide:** dùng gói RootHide và cài rootless-compat từ 0.9.
 
-Cài gói, Respring rồi mở GOFA 4.2.1 hoặc 4.2.2 (iOS 14 dùng GOFA 4.2.1). Vào **Cài đặt → GOFA → Vị trí**, chọn **Luôn luôn** và bật **Vị trí chính xác**. Đợi GOFA nhận thông tin rồi về Home hoặc chuyển sang ứng dụng khác để hiện bong bóng.
+Cài gói, Respring rồi mở GOFA 4.2.1, 4.2.2 hoặc 4.2.3 (iOS 14 dùng GOFA 4.2.1). Vào **Cài đặt → GOFA → Vị trí**, chọn **Luôn luôn** và bật **Vị trí chính xác**. Đợi GOFA nhận thông tin rồi về Home hoặc chuyển sang ứng dụng khác để hiện bong bóng.
 
 ### 2. Điều khiển bong bóng
 
@@ -45,3 +45,9 @@ File TXT gom nội dung các tệp đọc được trong Logs, CrashReporter và
 - Kiểm tra đã cài đúng gói Rootful/Rootless/RootHide và các dependency mà Sileo/Zebra yêu cầu; không cài chồng các gói khác môi trường.
 - Nếu thiếu tốc độ hoặc biển báo, kiểm tra dữ liệu trong GOFA trước, quyền vị trí Luôn luôn và Vị trí chính xác. Mở GOFA để nhận dữ liệu rồi chuyển app; không bật chế độ TEST khi đối chiếu dữ liệu thật.
 - Nếu vẫn lỗi, xuất TXT ngay sau khi thử lại và gửi kèm phiên bản iOS, GOFA, GOFA HUD cùng môi trường jailbreak.
+
+## Tự nhận nguồn GOFA
+
+Khắc phục mất biển giới hạn sau cập nhật GOFA 4.2.3. Trên iOS 15 trở lên, tự tìm trường theo tên, kiểu và vị trí thật thay vì chỉ dựa vào số phiên bản. Tách nguồn tốc độ và biển báo; có nguồn dự phòng lấy giới hạn GOFA đang hiển thị. Chỉ cập nhật khi giá trị đổi, không làm mới giả tuổi dữ liệu lưu lại. Nếu cấu trúc không phù hợp, dừng riêng nguồn đó và ghi nguyên nhân vào Gửi logs.
+
+Rootless/RootHide: GOFA 4.2.1, 4.2.2 và 4.2.3. Trên iOS 15 trở lên, build mới có thể tự nhận nếu cấu trúc dữ liệu vẫn xác thực được; không bảo đảm mọi cập nhật GOFA. iOS 14 Rootful dùng GOFA 4.2.1 và giữ profile đã xác minh, không bật tự phản chiếu Swift.

@@ -1,0 +1,33 @@
+name: Publish GOFA HUD 0.3.4
+on:
+  push:
+    paths:
+      - 'release/0.3.4/**'
+      - '.github/workflows/gofahud-release-034.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-gofahud-034
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source manifests and build deterministic archives
+        run: python3 release/0.3.4/build_sources.py
+      - name: Publish packages and source archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create v0.3.4 \
+            GOFAHUD-0.3.4-rootless.deb GOFAHUD-0.3.4-roothide.deb GOFAHUD-0.3.4-rootful.deb \
+            outputs/releases/GOFAHUD-rootless-0.3.4-source.zip \
+            outputs/releases/GOFAHUD-roothide-0.3.4-source.zip \
+            outputs/releases/GOFAHUD-ios14-rootful-0.3.4-source.zip \
+            --target "$GITHUB_SHA" --title 'GOFA HUD 0.3.4' \
+            --notes-file release/0.3.4/NOTES.md --latest

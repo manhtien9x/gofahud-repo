@@ -1,49 +1,49 @@
 Package: local.gofahud
 Name: GOFA HUD (Rootless)
-Version: 0.3.3-1
+Version: 0.3.4
 Architecture: iphoneos-arm64
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
- Tương thích: iOS 15–16, Dopamine Rootless. GOFA 4.2.1 và 4.2.2.
+ Tương thích: iOS 15–16, Dopamine Rootless. GOFA 4.2.1, 4.2.2 và 4.2.3.
  Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
  Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.3-1-rootless.deb
-Size: 652860
+Filename: GOFAHUD-0.3.4-rootless.deb
+Size: 667640
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-rootless.html
-MD5sum: 557de2a58d8d85f92faf4ec163508c27
-SHA1: 1cb4e5ec791f14ebbc74a81b8df08157d6772c34
-SHA256: 7adaaf345d8e7f5525c5464f2695af985e019748925a892cce5754de38c39244
-SHA512: 2fa82196a1ac6ea409df9293c3127d728423dd39dd68fa355e3ddd10c0708f74f0527a14b211d08dd4ed46e813c0b5f3ec7431f89bda0cdc818d82b088829cc9
+MD5sum: cc599c93656af90b54fc51e345db3187
+SHA1: 7d89c6df8d1433d19e1ead04732fc31d2ce20dcb
+SHA256: 47dcf4c363a062899b7202beaa84507b9cb6855f1a5c757e0fd053d0990b4a87
+SHA512: fce8d92cf3afaea91cb99ddbab31392ccc19ab11dc44c5ef6cb8ecc8931b24a02cac9ce254d9160bf8fb3b345b890e3096125366b111ac923bc5b5e7cc2fa605
 
 Package: local.gofahud
 Name: GOFA HUD (RootHide)
-Version: 0.3.3-1
+Version: 0.3.4
 Architecture: iphoneos-arm64e
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 15.0), firmware (<< 17.0), mobilesubstrate, ldid, preferenceloader
 Description: Bong bóng GOFA trên iPhone và CarPlay.
- Tương thích: RootHide; cần rootless-compat từ 0.9. GOFA 4.2.1 và 4.2.2.
+ Tương thích: RootHide; cần rootless-compat từ 0.9. GOFA 4.2.1, 4.2.2 và 4.2.3.
  Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
  Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
 Tag: role::enduser
 Pre-Depends: rootless-compat(>= 0.9)
-Filename: GOFAHUD-0.3.3-1-roothide.deb
-Size: 1308302
+Filename: GOFAHUD-0.3.4-roothide.deb
+Size: 1338164
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-roothide.html
-MD5sum: 8b67f9d9825e21465e2dc983caed2310
-SHA1: 952b0970e7953a05fc40f7e0cf541fc1be7aed0f
-SHA256: 63799539cbad587022ccd27c08155cb43745de36e25ca8033da2aae1aab3120c
-SHA512: 000b95a094435c9b054f770a79453e6aba94ed1c6eb3fbc824ab38373b9f6dd8c0d5141900ea59318acc3a4c7eb679060c9f1125ed68badf451fbe005c24ba22
+MD5sum: 14c38c1c1a1b4dffcd29cf00af97aba4
+SHA1: ed3a527db32c80273f4ab16c26771ffcd11df626
+SHA256: dcc3927b42a2ca46fbac3fb1abc32262aa6c7b5277af61721a1cbb3be913b505
+SHA512: 99736b952b2bf47a3fc5a0447ec29a7730b82b680125ed002ed59b75d97b928c6c67a18f03e1dc157e739411c5ab29f0cb16a4c3e88f4bb8be8433d232cee7ca
 
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.3-1
+Version: 0.3.4
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
@@ -54,11 +54,11 @@ Description: Bong bóng GOFA trên iPhone và CarPlay.
  Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
  Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.3-1-rootful.deb
-Size: 461870
+Filename: GOFAHUD-0.3.4-rootful.deb
+Size: 470798
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-ios14.html
-MD5sum: f75395b83de440ea96986cdbf10dfcb0
-SHA1: 6b98e7b05e2dee87c62ea766276a87b8a644a3f5
-SHA256: 434da82c854622873bbfdabbd0e5a8affbc404834c7c17e1effb516c8480ae88
-SHA512: ca0b6cc30b880736e048645b5d22b986691923f09ae24fabd09273267c3b66ceb38f6c3972c8eb861e678ad2f95738b616ec07d18ed33902efe46499389319e1
+MD5sum: 0b136c17c9fd0f320e476c80b01fa886
+SHA1: 9b77a5e629b0fc827bf46779d2e5134761c00efa
+SHA256: bfafe3252a07a0a7bc2ab933f2a9b2f39c1452ac5e84af1407f74d6f73d3859e
+SHA512: f85893877adc11fd5c9c87f6d0beef5e202832de9e1daceaf587ec32db14bac44a7b3582520ceb4516d0dd17b61bfe73161a5f303b8997c0e5cfe6ad26c688c5
 

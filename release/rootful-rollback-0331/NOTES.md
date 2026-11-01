@@ -1,4 +1,10 @@
-# GOFA HUD 0.3.4 — Tự nhận nguồn GOFA
+> **iOS 14 Rootful: dùng lại 0.3.3-1.** Người dùng báo gói Rootful 0.3.4 không hoạt động. Repo đã khôi phục nguyên gói Rootful 0.3.3-1; không dùng file Rootful 0.3.4 trong các tệp lưu trữ bên dưới. Rootless và RootHide giữ nguyên 0.3.4.
+>
+> [Tải Rootful 0.3.3-1](https://manhtien9x.github.io/gofahud-repo/GOFAHUD-0.3.3-1-rootful.deb) · [Release và mã nguồn 0.3.3-1](https://github.com/manhtien9x/gofahud-repo/releases/tag/v0.3.3-1)
+>
+> Nếu đã cài 0.3.4 Rootful, hạ về 0.3.3-1 rồi Respring và mở GOFA 4.2.1.
+
+---
 
 GOFA HUD 0.3.4 — GOFA 4.2.3 và tự nhận cấu trúc nguồn dữ liệu.
 

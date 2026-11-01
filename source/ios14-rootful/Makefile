@@ -4,7 +4,7 @@ include $(THEOS)/makefiles/common.mk
 TWEAK_NAME = GOFADevProbe GofaLifecycle GofaLaunchHelper GofaPhoneOverlay GofaCarplayGlobal GofaCarplayOverlay
 TOOL_NAME = gofahud-native-speed-bridge gofahud-test-speed
 
-GOFADevProbe_FILES = probe/native-probe.m probe/notification-probe.m probe/command-probe.m probe/location-audit.m probe/hud-message-probe.m probe/display-limit-bridge.m common/gofa-source-profile.m common/speed-state.m common/hud-protocol.c common/hud-live-state.m
+GOFADevProbe_FILES = probe/native-probe.m probe/notification-probe.m probe/command-probe.m probe/location-audit.m probe/hud-message-probe.m common/speed-state.m common/hud-protocol.c common/hud-live-state.m
 GOFADevProbe_CFLAGS = -fobjc-arc -O2 -UNDEBUG -Icommon -Wall -Wextra
 GOFADevProbe_FRAMEWORKS = Foundation CoreFoundation UIKit QuartzCore CoreGraphics CoreLocation CoreBluetooth
 

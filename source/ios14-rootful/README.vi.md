@@ -1,4 +1,4 @@
-# GOFA HUD — source 0.3.4 (ios14-rootful)
+# GOFA HUD — source 0.3.3-1 (ios14-rootful)
 
 Source của bản đã kiểm thử trên iPhone 6s, iOS 15.8.8, Dopamine rootless, GOFA 4.2.1. Bong bóng iPhone và CarPlay lấy cùng nguồn GOFA; CarPlay đã thử qua Home, Google Maps và YouTube Music, kéo vị trí, chạm mở GOFA trên xe, kéo vào X tắt và hiện lại khi rời GOFA. Kích thước CarPlay còn 70% mỗi chiều. Camera thật còn cần kiểm chứng trên đường.
 
@@ -54,9 +54,3 @@ Nút Gửi logs của bản 0.3.3 đã được người dùng xác nhận hoạ
 Thêm nhãn Test hiển thị bong bóng phía trên các nút thử; phần giải thích đặt sát dưới ô cài đặt và thu gọn khoảng cách giữa các mục. Chạm Gửi logs trong Cài đặt → GOFA HUD. Tweak gom đầy đủ log đọc được và CrashReporter thành file TXT, rồi tự mở bảng chia sẻ file của iOS. Bạn chọn Mail, Gmail, Tin nhắn, Zalo, Telegram hoặc ứng dụng đã cài có hỗ trợ nhận file. Không tự gửi đến người nhận nào.
 
 Chức năng Gửi logs đã được người dùng xác nhận hoạt động trên iOS 15.8.8. RootHide và iOS 14 Rootful đã đóng gói, cần kiểm thử lại bản mới trên máy. Nguồn GOFA 4.2.2 đã xác nhận nhận tốc độ và giới hạn khi chạy nền trên iOS 15.8.8; camera thực tế và CarPlay với GOFA 4.2.2 cần thử lại.
-
-## Thay đổi — 0.3.4
-
-Khắc phục mất biển giới hạn sau cập nhật GOFA 4.2.3. Trên iOS 15 trở lên, tự tìm trường theo tên, kiểu và vị trí thật thay vì chỉ dựa vào số phiên bản. Tách nguồn tốc độ và biển báo; có nguồn dự phòng lấy giới hạn GOFA đang hiển thị. Chỉ cập nhật khi giá trị đổi, không làm mới giả tuổi dữ liệu lưu lại. Nếu cấu trúc không phù hợp, dừng riêng nguồn đó và ghi nguyên nhân vào Gửi logs.
-
-Bản 0.3.4 đã xác nhận tốc độ, biển giới hạn và đường tự nhận build chưa biết trên iOS 15.8.8 với GOFA 4.2.3; 14 kiểm tra cấu trúc đạt. Các bản RootHide/Rootful đã đóng gói nhưng cần thử lại trên máy tương ứng. Cần kiểm tra đổi biển khi di chuyển, camera thật và CarPlay với GOFA mới.

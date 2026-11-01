@@ -43,22 +43,21 @@ SHA512: 99736b952b2bf47a3fc5a0447ec29a7730b82b680125ed002ed59b75d97b928c6c67a18f
 
 Package: local.gofahud
 Name: GOFA HUD (iOS 14 Rootful)
-Version: 0.3.4
+Version: 0.3.3-1
 Architecture: iphoneos-arm
 Maintainer: GOFA HUD Development
 Author: GOFA HUD contributors; GMapHUD base by chou
 Section: Tweaks
 Depends: firmware (>= 14.0), firmware (<< 15.0), org.coolstar.libhooker, preferenceloader
-Description: Bong bóng GOFA trên iPhone và CarPlay.
- Tương thích: Dành cho iOS 14 Rootful. GOFA 4.2.1 trên iOS 14.
- Gửi logs: gom đầy đủ Logs và CrashReporter thành TXT rồi mở bảng chia sẻ file iOS.
- Có bố cục, kích cỡ, vị trí và cảnh báo tự co giãn.
+Description: Bong bóng tốc độ và biển báo GOFA trên iPhone và CarPlay.
+ Tương thích: iOS 14 Rootful; GOFA 4.2.1.
+ Gửi logs: gom đầy đủ log đọc được và mở bảng chia sẻ file iOS.
 Tag: role::enduser
-Filename: GOFAHUD-0.3.4-rootful.deb
-Size: 470798
+Filename: GOFAHUD-0.3.3-1-rootful.deb
+Size: 461870
 Depiction: https://manhtien9x.github.io/gofahud-repo/depiction-ios14.html
-MD5sum: 0b136c17c9fd0f320e476c80b01fa886
-SHA1: 9b77a5e629b0fc827bf46779d2e5134761c00efa
-SHA256: bfafe3252a07a0a7bc2ab933f2a9b2f39c1452ac5e84af1407f74d6f73d3859e
-SHA512: f85893877adc11fd5c9c87f6d0beef5e202832de9e1daceaf587ec32db14bac44a7b3582520ceb4516d0dd17b61bfe73161a5f303b8997c0e5cfe6ad26c688c5
+MD5sum: f75395b83de440ea96986cdbf10dfcb0
+SHA1: 6b98e7b05e2dee87c62ea766276a87b8a644a3f5
+SHA256: 434da82c854622873bbfdabbd0e5a8affbc404834c7c17e1effb516c8480ae88
+SHA512: ca0b6cc30b880736e048645b5d22b986691923f09ae24fabd09273267c3b66ceb38f6c3972c8eb861e678ad2f95738b616ec07d18ed33902efe46499389319e1
 

@@ -1,20 +1,16 @@
 {
-  "version": "0.3.4",
+  "version": "0.3.3-1",
   "profile": "ios14-rootful",
   "changedRuntimeFiles": [
-    "Library/MobileSubstrate/DynamicLibraries/GOFADevProbe.dylib"
+    "Library/PreferenceBundles/GofaHUDPrefs.bundle/GofaHUDPrefs"
   ],
-  "adaptiveSourceValidation": true,
-  "legacyIOS14ReflectionGuardPreserved": true,
-  "layoutRegressionChecksPassed": 14,
-  "unknownBuildPathTestedOnIOS1588": false,
-  "displayLimitConfirmedKmH": null,
-  "movingLimitAndCameraRetestRequired": true,
-  "otherDeviceRuntimeRetestRequired": true,
+  "nativeIOSFileShare": true,
+  "fullLogExporterUnchanged": true,
   "pageSignaturesVerified": true,
-  "file": "GOFAHUD-0.3.4-rootful.deb",
-  "bytes": 470798,
-  "sha256": "bfafe3252a07a0a7bc2ab933f2a9b2f39c1452ac5e84af1407f74d6f73d3859e",
-  "directShareConfirmedOnIOS1588": false,
-  "runtimeRetestRequired": true
+  "retainsGOFA422Fix": true,
+  "runtimeRetestRequired": true,
+  "file": "GOFAHUD-0.3.3-1-rootful.deb",
+  "bytes": 461870,
+  "sha256": "434da82c854622873bbfdabbd0e5a8affbc404834c7c17e1effb516c8480ae88",
+  "directShareConfirmedOnIOS1588": false
 }

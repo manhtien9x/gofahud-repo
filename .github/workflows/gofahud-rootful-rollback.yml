@@ -1,0 +1,21 @@
+name: Note iOS 14 Rootful rollback
+on:
+  push:
+    paths:
+      - 'release/rootful-rollback-0331/**'
+      - '.github/workflows/gofahud-rootful-rollback.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  annotate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mark the Rootful 0.3.4 package as superseded by 0.3.3-1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit v0.3.4 --notes-file release/rootful-rollback-0331/NOTES.md
